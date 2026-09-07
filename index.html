@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f1720">
-<title>Plan Juan · Registro diario</title>
+<title>Plan de Juan</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -726,7 +726,7 @@ const DEFAULT_PLAN = {
   compra: {
     nombre: "Qué comprar",
     icon: "🛒",
-    nota: "La lista de la compra con cara. Los suplementos son el producto exacto; del resto, lo que importa es lo que dice cada ficha, que es lo que hay que mirar en la etiqueta.",
+    nota: "La lista de la compra con cara. Los que llevan foto son el producto tal cual, para que lo reconozcas en el lineal; en los que todavía no la tienen, lo que manda es lo que dice la ficha, que es lo que hay que mirar en la etiqueta.",
     pie: "Si un producto de tu supermercado cumple lo que dice la ficha, vale igual. La marca da lo mismo: lo que no da lo mismo es el azúcar y la grasa de la etiqueta.",
     cats: [
       { cat:"Suplementación · iO.GENIX", items:[
@@ -742,34 +742,44 @@ const DEFAULT_PLAN = {
           nota:"Una perla con la comida principal, siempre con comida, nunca en ayunas." }
       ]},
       { cat:"Lácteos y postres", items:[
-        { n:"Queso fresco batido 0 % sin lactosa", d:"1 tarrina · 250 g", emoji:"🥛",
+        { n:"Queso fresco batido 0 % sin lactosa", d:"1 tarrina · 250 g", foto:"fotos/queso-batido.webp",
           nota:"En la etiqueta: 0 % materia grasa y sin azúcares añadidos. Es la base de las natillas proteicas." },
-        { n:"Yogures o natillas de proteína", d:"1 tarrina", emoji:"🍮",
-          nota:"Busca 18-20 g de proteína por tarrina y azúcares por debajo de 5 g." },
+        { n:"Natillas o yogures de proteína", d:"1 o 2 tarrinas", foto:"fotos/natillas-proteina.webp",
+          nota:"Las de la foto traen 10 g de proteína y 97 kcal, así que dos tarrinas son una ración del plan. Si encuentras de 18-20 g, con una vas servido." },
         { n:"Yogur griego 0 % sin lactosa", d:"1 yogur · 150 g", emoji:"🥣",
           nota:"Griego 0 %, no 'estilo griego' azucarado." },
-        { n:"Gelatina 0 % azúcares", d:"2 tarrinas", emoji:"🍧",
+        { n:"Gelatina 0 % azúcares", d:"2 tarrinas", foto:"fotos/gelatina.webp",
           nota:"8 kcal la tarrina. Tarrinas hechas o sobres para preparar; ten cuatro en la nevera." },
-        { n:"Flan de huevo 0 % azúcares", d:"1 unidad", emoji:"🍨",
-          nota:"De los de tarrina, 70 kcal. Que diga sin azúcares añadidos." },
-        { n:"Queso light en lonchas", d:"2 lonchas · 30 g", emoji:"🧀",
+        { n:"Flan 0 % azúcares", d:"1 unidad", foto:"fotos/flan.webp",
+          nota:"El de la foto son 62 kcal y 10 g de proteína. Que diga sin azúcares añadidos." },
+        { n:"Flan de clara de huevo proteico", d:"1 unidad · 160 g", foto:"fotos/flan-clara.webp",
+          nota:"13 g de proteína y 0 % azúcares añadidos: es postre y es proteína a la vez. El mejor de la nevera." },
+        { n:"Queso light en lonchas", d:"2 lonchas · 30 g", foto:"fotos/queso-lonchas.webp",
           nota:"Para dentro de la tortilla francesa. Light de verdad, no 'tierno'." },
-        { n:"Leche semidesnatada sin lactosa", d:"1 vaso · 200-300 ml", emoji:"🥛",
+        { n:"Queso en lonchas alto en proteína", d:"2 lonchas · 40 g", foto:"fotos/queso-lonchas-prot.webp",
+          nota:"La alternativa al light cuando quieras que sepa más a queso: más proteína y el mismo sitio en el plan." },
+        { n:"Leche semidesnatada sin lactosa", d:"1 vaso · 200-300 ml", foto:"fotos/leche.webp",
           nota:"Semi y sin lactosa, la que ya tomas." }
       ]},
       { cat:"Despensa", items:[
-        { n:"Tortitas de maíz o de arroz", d:"2 o 3 unidades", emoji:"🫓",
-          nota:"Sin chocolate ni yogur por encima de fábrica: eso lo pones tú." },
-        { n:"Chocolate 85 % sin azúcar añadido", d:"1 o 2 onzas · 10-15 g", emoji:"🍫",
+        { n:"Tortitas de maíz o de arroz", d:"2 o 3 unidades", foto:"fotos/tortitas.webp",
+          nota:"Las de sabores valen igual mientras no lleven chocolate ni yogur por encima de fábrica: eso lo pones tú." },
+        { n:"Chocolate 85 % sin azúcar añadido", d:"1 o 2 onzas · 10-15 g", foto:"fotos/chocolate85.webp",
           nota:"En tableta de onzas ya partidas: se controla mucho mejor que a mordiscos." },
         { n:"Pan integral", d:"1 rebanada gruesa o 1 panecillo", emoji:"🍞",
           nota:"Que el primer ingrediente sea harina integral, no 'harina de trigo'." },
         { n:"Cereales integrales sin azúcar", d:"1 taza pequeña · 40 g", emoji:"🥣",
           nota:"Menos de 8 g de azúcar por 100 g. Si lleva miel o chocolate, no es." },
-        { n:"Cacao puro desgrasado", d:"1 cucharada", emoji:"🍫",
+        { n:"Cacao puro desgrasado", d:"1 cucharada", foto:"fotos/cacao.webp",
           nota:"Puro, no soluble azucarado. Una cucharada convierte un queso batido en natillas." },
+        { n:"Edulcorante líquido", d:"unas gotas", foto:"fotos/edulcorante.webp",
+          nota:"Para el café, el queso batido y los pancakes. Cero calorías y no deja el regusto de la pastilla." },
         { n:"Sirope 0 % azúcares", d:"al gusto", emoji:"🍯",
           nota:"Para los pancakes y las tortitas de avena." },
+        { n:"Tomate frito 0 % azúcares añadidos", d:"2 cucharadas", foto:"fotos/tomate-frito.webp",
+          nota:"El tomate frito normal lleva azúcar y bastante aceite. Este no, y el guiso sabe igual." },
+        { n:"Salsa barbacoa 0 % azúcares", d:"1 o 2 cucharadas", foto:"fotos/salsa-barbacoa.webp",
+          nota:"Para el pollo y la patata al horno. Es lo que evita que la comida sana se te haga aburrida." },
         { n:"Bebidas zero y agua con gas", d:"libre", emoji:"🥤",
           nota:"Sin límite. Que estén frías y a mano, sobre todo en la tienda." },
         { n:"Encurtidos: pepinillos, cebolletas, altramuces", d:"1 bote", emoji:"🥒",
@@ -778,7 +788,7 @@ const DEFAULT_PLAN = {
       { cat:"Nevera y congelador", items:[
         { n:"Pechuga de pollo o pavo", d:"1 pechuga grande · 200 g", emoji:"🍗",
           nota:"En filetes ya cortados se hace en cuatro minutos a la plancha." },
-        { n:"Bote de patata cocida", d:"al peso, escurrida", emoji:"🥔",
+        { n:"Bote de patata cocida", d:"al peso, escurrida", foto:"fotos/patata-bote.webp",
           nota:"Tu hidrato principal, ya hecho. Mira que no lleve más que patata, agua y sal." },
         { n:"Bolsas de verdura para microondas", d:"1 bolsa", emoji:"🥦",
           nota:"Judía verde, calabacín o menestra. Tres minutos y no hay que cortar nada." },
@@ -842,6 +852,8 @@ const DEFAULT_PLAN = {
       ["Queso batido 0 % con canela", "1 tarrina y canela. Nada más"],
       ["Gelatina 0 % azúcares", "Tarrinas hechas o sobres para preparar. 8 kcal la tarrina"],
       ["Cacao puro desgrasado", "1 cucharada convierte un queso batido en unas natillas. Que sea puro, no soluble azucarado"],
+      ["Edulcorante líquido", "Unas gotas en el café, en el queso batido o en los pancakes. Cero calorías"],
+      ["Flan de clara de huevo proteico", "1 unidad: 13 g de proteína y 0 % azúcares. Postre y proteína a la vez"],
       ["Sirope 0 % azúcares", "Para los pancakes y las tortitas de avena. Cero calorías reales"],
       ["Barritas proteicas", "Una en el coche y otra en la tienda. Para el día que se torció todo"],
       ["Flan de huevo 0 % azúcares", "De los de tarrina. 70 kcal"]
@@ -853,7 +865,8 @@ const DEFAULT_PLAN = {
       ["Desgrasa el caldo en frío", "Guiso a la nevera, la capa blanca de arriba se quita con la cuchara al día siguiente"],
       ["Horno, plancha y microondas antes que sartén", "Mismo alimento, la mitad del aceite"],
       ["AOVE en spray", "Para dosificar sin pesar. 5 pulsaciones ≈ 1 cucharadita"],
-      ["Agua o caldo en vez de más aceite", "Si el guiso se queda seco, se añade caldo desgrasado, no más aceite"]
+      ["Agua o caldo en vez de más aceite", "Si el guiso se queda seco, se añade caldo desgrasado, no más aceite"],
+      ["Salsas cero: tomate frito y barbacoa sin azúcares", "Dan sabor sin sumar. Es lo que hace que un pollo con patata no se te haga aburrido al tercer día"]
     ]},
     { cat:"Para la tienda", items:[
       ["Táper de la comida hecho la noche antes", "La única regla que de verdad importa los días de tienda"],
