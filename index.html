@@ -116,6 +116,23 @@ header{
   font-size:12.5px;cursor:pointer;color:var(--dim);font-weight:600
 }
 .modes button.on{background:var(--acc);border-color:var(--acc);color:#07231b}
+.modes.fam{margin:12px 0 0}
+.modes.fam button{font-size:13.5px;padding:10px}
+.modes.var{margin:6px 0 2px}
+.modes.var button{font-size:12px;padding:7px;border-radius:9px}
+.modes.var button.on{background:transparent;border-color:var(--acc);color:var(--acc)}
+.elegir{
+  display:flex;align-items:center;gap:7px;margin:12px 0 -2px;
+  font-size:12px;color:var(--dim2)
+}
+.elegir b{color:var(--txt);font-weight:600}
+.el{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:2px 5px;border-radius:5px;vertical-align:1.5px;margin-left:6px;white-space:nowrap
+}
+.el.uno{background:var(--acc);color:#07231b}
+.el.opc{background:transparent;border:1px solid var(--line);color:var(--dim2)}
+.el.var{background:transparent;border:1px solid var(--acc);color:var(--acc)}
 .note{
   background:rgba(224,163,74,.1);border-left:3px solid var(--warn);border-radius:0 8px 8px 0;
   padding:9px 11px;margin:11px 0 0;font-size:12px;color:#e8d3b2
@@ -352,6 +369,7 @@ const DEFAULT_PLAN = {
   almacen: "juan_app_v1",
   /* Un solo objetivo y una sola estructura de comidas: entrene o no, lo mismo. */
   tipoUnico: true,
+  marcarEleccion: true,
   objetivos: {
     entreno: { kcal: 2700, p: 190, hc: 300, g: 80 }
   },
@@ -575,21 +593,21 @@ const DEFAULT_PLAN = {
     entreno: [
       { id:"desayuno", nombre:"Desayuno", icon:"🍳", hora:{A:"8:15",B:"8:15"},
         modos:[
-          { id:"salado", nombre:"Salado", grupos:[
+          { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["huevos32","huevos22","tortillaqueso","pavolonchas100","jamoncocido100","atun1"] },
             { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint80","panint60","panint40","panmolde2","tortitas3","patata200"] },
             { id:"veg",  nombre:"Verdura opcional", nota:"champiñón o pimiento en la tortilla", tipo:"one", ops:["champi150","pimicebolla100","tomatetrit100","espinacas150"] },
             { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove5","aguacate80"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","lechesl200","agua","infusion"] }
           ]},
-          { id:"dulce", nombre:"Dulce", grupos:[
+          { id:"dulce", fam:"Dulce", nombre:"Me la monto", grupos:[
             { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","quesobatido250","yogurprot","yogurgriego150"] },
             { id:"prot", nombre:"Proteína opcional", tipo:"one", ops:["prot30"] },
             { id:"hc",   nombre:"Cereal", tipo:"one", ops:["avenasabor50","harinaavena50","cremaarroz50","avena40","avena30","cereales40","tortitas3","panint60"] },
             { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos15"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","agua","infusion"] }
           ]},
-          { id:"suple", nombre:"Con suple", grupos:[
+          { id:"suple", fam:"Dulce", nombre:"Con suple", grupos:[
             { id:"combo", nombre:"Combinación", nota:"con lo que ya tienes en casa", tipo:"one", ops:["cap_pancakes","cap_avenaprot","cap_cremaarrozprot"] },
             { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos15"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","lechesl200","agua","infusion"] }
@@ -599,16 +617,16 @@ const DEFAULT_PLAN = {
 
       { id:"mediamanana", nombre:"Media mañana", icon:"🥤", hora:{A:"11:30",B:"11:30"},
         modos:[
-          { id:"batido", nombre:"Batido", grupos:[
+          { id:"batido", fam:"Dulce", nombre:"Batido", grupos:[
             { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","agua"] },
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["prot30"] },
             { id:"hc",   nombre:"Hidrato opcional", nota:"la harina de avena se bebe bien dentro del batido", tipo:"one", ops:["harinaavena50","avenasabor50","avena30","avena40","tortitas3"] }
           ]},
-          { id:"salado", nombre:"Salado", grupos:[
+          { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["cap_tortijamon","pavolonchas100","jamoncocido100","atun1","huevos22","quesolight30"] },
             { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint60","panint40","tortitas3","tortitas2"] }
           ]},
-          { id:"lacteo", nombre:"Lácteo", grupos:[
+          { id:"lacteo", fam:"Dulce", nombre:"Lácteo", grupos:[
             { id:"prot", nombre:"Lácteo", tipo:"one", ops:["quesobatido250","yogurprot","yogurgriego150"] },
             { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["avenasabor50","avena30","tortitas3","cereales40"] }
           ]}
@@ -623,28 +641,28 @@ const DEFAULT_PLAN = {
           { id:"veg",  nombre:"Verdura", nota:"empieza por una porción y sube", tipo:"one", ops:["calabacin200","champi150","judiaverde200","espinacas200","esparragos150","pimicebolla100","tomatetrit100","cremacalab250"] },
           { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove10","aove5"] },
           { id:"suple", nombre:"Suplemento", nota:"el omega 3 va con la comida principal", tipo:"many", ops:["omega3"] },
-          { id:"postre", nombre:"Postre", tipo:"one", ops:["cap_gelatina","cap_quesocanela","yogurprot","cap_yogurcacao","cap_flan","cafe","infusion","refrescozero"] }
+          { id:"postre", nombre:"Postre opcional", tipo:"one", ops:["cap_gelatina","cap_quesocanela","yogurprot","cap_yogurcacao","cap_flan","cafe","infusion","refrescozero"] }
         ],
         notas:[["Es la comida grande","Si un día tiene que ser abundante, es esta. Carne o pescado, patata a peso y la verdura dentro del plato, no de guarnición triste al lado."],
                ["Guisos, sí; grasa de guiso, no","Los guisos entran perfectamente: lentejas, potaje, carne con patatas. Lo que cambia es cómo se hacen: sofrito corto y con una cucharada de aceite en vez de un chorro, carne sin la parte de grasa ni la piel, y fuera chorizo, morcilla y tocino. El mismo plato baja 200-300 kcal y sabe igual."]] },
 
       { id:"merienda", nombre:"Merienda", icon:"🍫", hora:{A:"18:30",B:"18:30"},
         modos:[
-          { id:"dulce", nombre:"Dulce", grupos:[
+          { id:"dulce", fam:"Dulce", nombre:"Capricho", grupos:[
             { id:"capricho", nombre:"Capricho dulce", nota:"esto está en el plan, no es hacer trampas", tipo:"one", ops:["cap_natillas","cap_quesocanela","yogurprot","cap_helado","cap_crepe","cap_tortiyogur","cap_barrita","cap_tortichoco","cap_yogurcacao","cap_choco15","cap_choco10","cap_gelatina","cap_flan"] },
             { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["tortitas2","tortitas3","panint40"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
-          { id:"salado", nombre:"Salado", grupos:[
+          { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["cap_tortijamon","pavolonchas100","jamoncocido100","atun1","quesobatido250","quesolight30"] },
             { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint40","tortitas3","tortitas2"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
-          { id:"suple", nombre:"Con suple", grupos:[
+          { id:"suple", fam:"Dulce", nombre:"Con suple", grupos:[
             { id:"combo", nombre:"Combinación", tipo:"one", ops:["cap_avenaprot","cap_pancakes","cap_cremaarrozprot"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
-          { id:"batido", nombre:"Batido", grupos:[
+          { id:"batido", fam:"Dulce", nombre:"Batido", grupos:[
             { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","agua"] },
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["prot30"] },
             { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos20","fsecos15"] }
@@ -1603,8 +1621,23 @@ function renderHoy(){
 
     if(meal.modos){
       const mid = d.modos[meal.id] || meal.modos[0].id;
-      h += `<div class="modes">` + meal.modos.map(m=>
-        `<button data-modo="${meal.id}|${m.id}" class="${m.id===mid?"on":""}">${esc(m.nombre)}</button>`).join("") + `</div>`;
+      const fams = S.plan.marcarEleccion ? [...new Set(meal.modos.map(m=>m.fam).filter(Boolean))] : [];
+      if(fams.length > 1){
+        const act = (meal.modos.find(m=>m.id===mid) || meal.modos[0]).fam;
+        h += `<div class="elegir">Elige <b>UNA</b> de las ${fams.length===2?"dos":fams.length} formas:</div>`;
+        h += `<div class="modes fam">` + fams.map(f=>{
+          const primero = meal.modos.find(m=>m.fam===f).id;
+          return `<button data-modo="${meal.id}|${primero}" class="${f===act?"on":""}">${esc(f)}</button>`;
+        }).join("") + `</div>`;
+        const hermanos = meal.modos.filter(m=>m.fam===act);
+        if(hermanos.length > 1){
+          h += `<div class="modes var">` + hermanos.map(m=>
+            `<button data-modo="${meal.id}|${m.id}" class="${m.id===mid?"on":""}">${esc(m.nombre)}</button>`).join("") + `</div>`;
+        }
+      } else {
+        h += `<div class="modes">` + meal.modos.map(m=>
+          `<button data-modo="${meal.id}|${m.id}" class="${m.id===mid?"on":""}">${esc(m.nombre)}</button>`).join("") + `</div>`;
+      }
     }
 
     if(sal) h += `<div class="note"><b>Ajuste automático aplicado.</b> ${esc(S.plan.reglas.salmorejo)}</div>`;
@@ -1626,7 +1659,16 @@ function renderHoy(){
       const oculto = grupoFuera(gr, sal, horarioDe(iso));
       const factor = (sal && gr.mitadSalmorejo) ? 0.5 : 1;
       const v = selDe(iso, meal.id, gr.id);
-      h += `<div class="grp"><h3>${esc(gr.nombre)}${gr.nota?` <em>· ${esc(gr.nota)}</em>`:""}</h3>`;
+      h += `<div class="grp"><h3>${(()=>{
+        if(!S.plan.marcarEleccion) return esc(gr.nombre);
+        const opc = /\bopcional\b/i.test(gr.nombre);
+        const nom = esc(gr.nombre.replace(/\s*opcional\s*$/i, ""));
+        if(gr.tipo === "many") return nom + (gr.ops.length === 1
+          ? ` <span class="el uno">siempre</span>`
+          : ` <span class="el var">las que quieras</span>`);
+        return nom + (opc ? ` <span class="el opc">opcional</span>`
+                          : ` <span class="el uno">elige 1</span>`);
+      })()}${gr.nota?` <em>· ${esc(gr.nota)}</em>`:""}</h3>`;
       gr.ops.forEach(fid=>{
         const f = food(fid); if(!f) return;
         const on = oculto ? false : (Array.isArray(v) ? v.includes(fid) : v===fid);
