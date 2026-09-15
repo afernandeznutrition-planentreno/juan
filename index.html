@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Plan Mikel">
+<meta name="apple-mobile-web-app-title" content="Plan Juan">
 <meta name="description" content="Registro diario de nutrición, pasos y entrenamiento">
 <style>
 :root{
@@ -241,6 +241,14 @@ header{
 .dsel button span{display:block;font-size:11px;color:var(--dim2);font-weight:400;margin-top:2px}
 .ex{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin:10px 0;padding:13px 14px}
 .ex .exh{display:flex;gap:9px;align-items:baseline;margin-bottom:3px}
+/* pictograma del ejercicio · SVG en línea, hereda el color del acento */
+.ex .exh{align-items:flex-start}
+.ejsvg{width:52px;height:52px;flex:0 0 52px;display:block;color:var(--acc);
+  background:var(--bg2);border-radius:9px;padding:1px;margin-top:-2px}
+.ejsvg .eq{stroke-width:1.6;opacity:.5}
+.ejsvg .fl{stroke-width:1.9;opacity:.85}
+.ejsvg .re{fill:currentColor;stroke:none;opacity:.9}
+.ejsvg .pt{stroke-width:4.6}
 .ex .exn{font-weight:650;font-size:14px;flex:1;line-height:1.3}
 .ex .exi{font-size:11.5px;color:var(--dim2);margin-bottom:9px}
 .ex .exi b{color:var(--dim);font-weight:600}
@@ -370,14 +378,6 @@ nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width
 </nav>
 <script>
 
-/* =====================================================================
-   PLAN DE JUAN — septiembre 2026
-   MES 1 · comer bien. Un solo tipo de día, sin contar calorías,
-   cantidades por raciones de casa y un peso a la semana.
-   El entrenamiento lo lleva su entrenador: esta app NO tiene pestaña de entreno.
-   Todo lo editable del cliente vive en este bloque DEFAULT_PLAN.
-   ===================================================================== */
-
 const DEFAULT_PLAN = {
   cliente: "Juan",
   version: "mes 1 · comer bien · sep 2026",
@@ -386,7 +386,7 @@ const DEFAULT_PLAN = {
   tipoUnico: true,
   marcarEleccion: true,
   objetivos: {
-    entreno: { kcal: 2700, p: 190, hc: 300, g: 80 }
+    entreno: { kcal: 2400, p: 200, hc: 230, g: 75 }
   },
   pasosObjetivo: 8000,
 
@@ -422,34 +422,50 @@ const DEFAULT_PLAN = {
     // ---- proteínas: carne por delante, que es lo que le gusta ----
     pollo200:     ["Pollo o pavo a la plancha", "200 g", 220, 46, 0, 5, "1 pechuga grande"],
     pollo150:     ["Pollo o pavo a la plancha", "150 g", 165, 35, 0, 4, "1 pechuga mediana"],
+    pollo250:      ["Pollo o pavo a la plancha", "250 g", 275, 57.5, 0, 6.3, "1 pechuga muy grande"],
     ternera180:   ["Ternera magra", "180 g", 234, 38, 0, 9, "1 filete grande"],
     ternera150:   ["Ternera magra", "150 g", 195, 32, 0, 7.5, "1 filete mediano"],
+    ternera220:    ["Ternera magra", "220 g", 286, 46.4, 0, 11, "1 filete muy grande"],
     cerdo180:     ["Lomo o solomillo de cerdo", "180 g", 234, 39, 0, 8, "1 filete grande"],
     cerdo150:     ["Lomo o solomillo de cerdo", "150 g", 195, 32, 0, 6.5, "3-4 medallones"],
+    cerdo220:      ["Lomo o solomillo de cerdo", "220 g", 286, 47.7, 0, 9.8, "1 filete muy grande"],
     picada150:    ["Carne picada de pollo o pavo", "150 g", 165, 32, 0, 4, "1 hamburguesa grande"],
+    picada200:     ["Carne picada de pollo o pavo", "200 g", 220, 42.7, 0, 5.3, "1 hamburguesa muy grande"],
     picadamix150: ["Carne picada mixta", "150 g", 255, 30, 0, 15, "1 hamburguesa grande"],
     merluza220:   ["Merluza o pescado blanco", "220 g", 198, 40, 0, 3, "2 lomos"],
+    merluza280:    ["Merluza o pescado blanco", "280 g", 252, 50.9, 0, 3.8, "3 lomos"],
     salmon150:    ["Salmón", "150 g", 312, 30, 0, 20, "1 pieza de salmón"],
+    salmon180:     ["Salmón", "180 g", 374, 36, 0, 24, "1 pieza grande de salmón"],
     atun2:        ["Atún al natural", "160 g escurridos", 186, 42, 0, 1.6, "2 latas"],
     atun1:        ["Atún al natural", "80 g escurridos", 93, 21, 0, 0.8, "1 lata"],
     pechugalata2: ["Pechuga de pollo al natural en lata", "2 latas · 160 g escurrido", 160, 34, 0, 3, "2 latas"],
+    pechugalata3:  ["Pechuga de pollo al natural en lata", "3 latas · 240 g escurrido", 240, 51, 0, 4.5, "3 latas"],
     gambas200:    ["Gambas o langostinos cocidos", "200 g", 198, 42, 0, 2, "1 bandeja pequeña"],
+    gambas250:     ["Gambas o langostinos cocidos", "250 g", 248, 52.5, 0, 2.5, "1 bandeja"],
     huevos32:     ["Huevos", "3 enteros + 2 claras", 245, 26, 2, 15, ""],
     huevos22:     ["Huevos", "2 enteros + 2 claras", 178, 20, 1.5, 10, ""],
+    huevos42:      ["Huevos", "4 enteros + 2 claras", 315, 32, 2.5, 20, ""],
     tortillaqueso:["Tortilla francesa con queso light", "2 huevos + 30 g de queso", 210, 22, 2, 12.5, ""],
     pavolonchas100:["Pavo o pollo en lonchas", "100 g", 115, 19, 1.2, 3.7, "5-6 lonchas"],
+    pavolonchas150: ["Pavo o pollo en lonchas", "150 g", 172, 28.5, 1.8, 5.6, "7-8 lonchas"],
     jamoncocido100:["Jamón cocido", "100 g", 110, 18, 1, 3.5, "4-5 lonchas"],
+    jamoncocido150: ["Jamón cocido", "150 g", 165, 27, 1.5, 5.3, "6-7 lonchas"],
     jamonserrano60:["Jamón serrano", "60 g", 144, 19, 0.2, 7.5, "3-4 lonchas"],
     legumbre250:  ["Lentejas o garbanzos cocidos", "250 g", 290, 20, 42, 1.5, "medio bote escurrido"],
+    legumbre350:   ["Lentejas o garbanzos cocidos", "350 g", 406, 28, 58.8, 2.1, "1 bote escurrido"],
     prot30:       ["Proteína en polvo (suple)", "30 g", 120, 24, 2, 2, "1 cazo"],
     // ---- lácteos, todos sin lactosa ----
     quesobatido250:["Queso fresco batido 0 % sin lactosa", "250 g", 125, 20, 10, 0.5, "1 tarrina"],
     quesobatido125:["Queso fresco batido 0 % sin lactosa", "125 g", 63, 10, 5, 0.3, "media tarrina"],
+    quesobatido350: ["Queso fresco batido 0 % sin lactosa", "350 g", 175, 28, 14, 0.7, "1 tarrina grande"],
     yogurprot:    ["Yogur o natillas de proteína", "160-200 g", 115, 20, 5, 2, "1 tarrina"],
     yogurgriego150:["Yogur griego 0 % sin lactosa", "150 g", 90, 15, 6, 0.5, "1 yogur"],
+    yogurgriego200: ["Yogur griego 0 % sin lactosa", "200 g", 120, 20, 8, 0.7, "1 yogur grande"],
     lechesl300:   ["Leche semi sin lactosa", "300 ml", 140, 10, 14, 4.5, "1 vaso grande"],
     lechesl200:   ["Leche semi sin lactosa", "200 ml", 93, 7, 9, 3, "1 vaso"],
+    lechesl400:    ["Leche semi sin lactosa", "400 ml", 187, 13.3, 18.7, 6, "1 tazón"],
     quesolight30: ["Queso light en lonchas", "30 g", 60, 9, 1, 2.5, "2 lonchas"],
+    quesolight60:  ["Queso light en lonchas", "60 g", 120, 18, 2, 5, "4 lonchas"],
     queso30:      ["Queso tierno o semicurado", "30 g", 105, 7.5, 0.5, 8, "1 loncha gruesa"],
     // ---- hidratos: la patata manda, y el pan es integral ----
     patata400:    ["Patata cocida o al horno", "400 g", 346, 8, 76, 0.5, "2 patatas grandes"],
@@ -457,31 +473,47 @@ const DEFAULT_PLAN = {
     patata300:    ["Patata cocida o al horno", "300 g", 260, 6, 57, 0.4, "1 patata grande"],
     patata250:    ["Patata cocida o al horno", "250 g", 217, 5, 48, 0.3, "1 patata mediana-grande"],
     patata200:    ["Patata cocida o al horno", "200 g", 174, 4, 38, 0.3, "1 patata mediana"],
+    patata450:     ["Patata cocida o al horno", "450 g", 389, 9, 86, 0.6, "2 patatas muy grandes"],
     boniato250:   ["Boniato asado", "250 g", 215, 4, 50, 0.3, "1 boniato mediano"],
+    boniato350:    ["Boniato asado", "350 g", 301, 5.6, 70, 0.4, "1 boniato grande"],
     arroz90:      ["Arroz crudo", "90 g", 321, 6.5, 66, 2.3, "1 plato ya cocido"],
     arroz70:      ["Arroz crudo", "70 g", 250, 5, 51, 1.8, "1 plato pequeño ya cocido"],
     arroz50:      ["Arroz crudo", "50 g", 179, 4, 36, 1.3, "medio plato ya cocido"],
+    arroz110:      ["Arroz crudo", "110 g", 392, 8, 81, 2.8, "1 plato grande ya cocido"],
     pasta90:      ["Pasta en seco", "90 g", 319, 11.5, 64, 1.4, "1 plato ya cocido"],
     pasta70:      ["Pasta en seco", "70 g", 248, 9, 50, 1.1, "1 plato pequeño ya cocido"],
     pasta50:      ["Pasta en seco", "50 g", 178, 6, 36, 0.8, "medio plato ya cocido"],
+    pasta110:      ["Pasta en seco", "110 g", 390, 14, 78, 1.7, "1 plato grande ya cocido"],
     panint80:     ["Pan integral", "80 g", 196, 7, 32, 2.6, "1 panecillo o 3 rebanadas"],
     panint60:     ["Pan integral", "60 g", 147, 5, 24, 2, "2 rebanadas gruesas"],
     panint40:     ["Pan integral", "40 g", 98, 4, 16, 1.4, "1 rebanada gruesa"],
+    panint100:     ["Pan integral", "100 g", 245, 8.8, 40, 3.3, "1 panecillo grande o 4 rebanadas"],
     panmolde2:    ["Pan de molde integral", "2 rebanadas", 130, 5, 22, 2.4, ""],
+    panmolde3:     ["Pan de molde integral", "3 rebanadas", 195, 7.5, 33, 3.6, ""],
     cereales40:   ["Cereales integrales sin azúcar", "40 g", 145, 4.5, 27, 1.5, "1 taza pequeña"],
+    cereales60:    ["Cereales integrales sin azúcar", "60 g", 218, 6.8, 40.5, 2.3, "1 taza"],
     avena40:      ["Copos de avena", "40 g", 152, 5.5, 23, 3, "4 cucharadas soperas"],
     avena30:      ["Copos de avena", "30 g", 114, 4, 17, 2.2, "3 cucharadas soperas"],
+    avena60:       ["Copos de avena", "60 g", 228, 8.3, 34.5, 4.5, "6 cucharadas soperas"],
+    avena50:       ["Copos de avena", "50 g", 190, 6.9, 28.8, 3.8, "5 cucharadas soperas"],
     avenasabor50: ["Copos de avena de sabores (suple)", "50 g", 190, 7, 29, 3.5, "1 cazo y medio"],
+    avenasabor70:  ["Copos de avena de sabores (suple)", "70 g", 266, 9.8, 40.6, 4.9, "2 cazos"],
     harinaavena50:["Harina de avena de sabores (suple)", "50 g", 190, 7, 29, 3.5, "1 cazo y medio"],
+    harinaavena70: ["Harina de avena de sabores (suple)", "70 g", 266, 9.8, 40.6, 4.9, "2 cazos"],
     cremaarroz50: ["Crema de arroz (suple)", "50 g", 190, 3.5, 42, 0.5, "1 cazo y medio"],
+    cremaarroz70:  ["Crema de arroz (suple)", "70 g", 266, 4.9, 58.8, 0.7, "2 cazos"],
     tortitas3:    ["Tortitas de maíz o de arroz", "3 unidades", 93, 2, 19.5, 0.5, ""],
     tortitas2:    ["Tortitas de maíz o de arroz", "2 unidades", 62, 1.3, 13, 0.3, ""],
+    tortitas4:     ["Tortitas de maíz o de arroz", "4 unidades", 124, 2.7, 26, 0.7, ""],
     // ---- grasas ----
     aove10:       ["AOVE", "10 g", 90, 0, 0, 10, "1 cucharada sopera"],
     aove5:        ["AOVE", "5 g", 45, 0, 0, 5, "1 cucharadita"],
+    aove15:        ["AOVE", "15 g", 135, 0, 0, 15, "1 cucharada sopera colmada"],
     fsecos20:     ["Frutos secos", "20 g", 125, 3.3, 2.5, 11, "1 puñado pequeño"],
     fsecos15:     ["Frutos secos", "15 g", 94, 2.5, 2, 8, "medio puñado"],
+    fsecos30:      ["Frutos secos", "30 g", 188, 5, 3.8, 16.5, "1 puñado"],
     cremacacah15: ["Crema de cacahuete", "15 g", 90, 4, 2.4, 7.5, "1 cucharada"],
+    cremacacah20:  ["Crema de cacahuete", "20 g", 120, 5.3, 3.2, 10, "1 cucharada colmada"],
     aguacate80:   ["Aguacate", "80 g", 128, 1.6, 1.4, 12, "medio aguacate"],
     omega3:       ["Omega 3 (suple)", "1 perla", 9, 0, 0, 1, ""],
     // ---- CAPRICHOS Y COMBINACIONES DULCES ----
@@ -522,21 +554,28 @@ const DEFAULT_PLAN = {
   /* --- 4 CATEGORÍAS. "veg" no computa --- */
   categorias: [
     { id:"prot", nombre:"Proteínas", icon:"🥩", ids:[
-      "pollo200","pollo150","ternera180","ternera150","cerdo180","cerdo150","picada150","picadamix150",
-      "merluza220","salmon150","atun2","atun1","gambas200","huevos32","huevos22","tortillaqueso",
-      "pavolonchas100","jamoncocido100","jamonserrano60","legumbre250","prot30","pechugalata2",
-      "quesobatido250","quesobatido125","yogurprot","yogurgriego150","lechesl300","lechesl200","quesolight30",
-      "cap_natillas","cap_quesocanela","cap_yogurcacao","cap_helado","cap_gelatina","cap_barrita",
-      "cap_tortiyogur","cap_tortijamon","cap_pancakes","cap_avenaprot"] },
+      "pollo200","pollo150","pollo250","ternera180","ternera150","ternera220",
+      "cerdo180","cerdo150","cerdo220","picada150","picada200","picadamix150",
+      "merluza220","merluza280","salmon150","salmon180","atun2","atun1",
+      "gambas200","gambas250","huevos32","huevos22","huevos42","tortillaqueso",
+      "pavolonchas100","pavolonchas150","jamoncocido100","jamoncocido150","jamonserrano60","legumbre250",
+      "legumbre350","prot30","pechugalata2","pechugalata3","quesobatido250","quesobatido125",
+      "quesobatido350","yogurprot","yogurgriego150","yogurgriego200","lechesl300","lechesl200",
+      "lechesl400","quesolight30","quesolight60","cap_natillas","cap_quesocanela","cap_yogurcacao",
+      "cap_helado","cap_gelatina","cap_barrita","cap_tortiyogur","cap_tortijamon","cap_pancakes",
+      "cap_avenaprot"] },
     { id:"hc", nombre:"Hidratos de carbono", icon:"🥔", ids:[
-      "patata400","patata350","patata300","patata250","patata200","boniato250",
-      "arroz90","arroz70","arroz50","pasta90","pasta70","pasta50",
-      "panint80","panint60","panint40","panmolde2","cereales40","avena40","avena30",
-      "avenasabor50","harinaavena50","cremaarroz50","tortitas3","tortitas2",
-      "cap_tortichoco","cap_crepe","cap_flan","cap_cremaarrozprot"] },
+      "patata400","patata350","patata300","patata250","patata200","patata450",
+      "boniato250","boniato350","arroz90","arroz70","arroz50","arroz110",
+      "pasta90","pasta70","pasta50","pasta110","panint80","panint60",
+      "panint40","panint100","panmolde2","panmolde3","cereales40","cereales60",
+      "avena40","avena30","avena60","avena50","avenasabor50","avenasabor70",
+      "harinaavena50","harinaavena70","cremaarroz50","cremaarroz70","tortitas3","tortitas2",
+      "tortitas4","cap_tortichoco","cap_crepe","cap_flan","cap_cremaarrozprot"] },
     { id:"gra", nombre:"Grasas", icon:"🥑", ids:[
-      "aove10","aove5","fsecos20","fsecos15","cremacacah15","aguacate80","queso30","omega3",
-      "cap_choco15","cap_choco10"] },
+      "aove10","aove5","aove15","fsecos20","fsecos15","fsecos30",
+      "cremacacah15","cremacacah20","aguacate80","queso30","omega3","cap_choco15",
+      "cap_choco10"] },
     { id:"veg", nombre:"Vegetales", icon:"🥬", cero:true,
       nota:"Espinacas, espárragos, calabacín, champiñón, judía verde, pimiento con cebolla, tomate triturado y cremas de verdura · calorías despreciables: no computan en el total del día. Ninguna es ensalada: todas van cocinadas dentro del plato.",
       ids:["espinacas200","espinacas150","esparragos150","calabacin200","champi150",
@@ -546,7 +585,7 @@ const DEFAULT_PLAN = {
 
   /* --- LÍMITES SEMANALES --- */
   limitesSemana: [
-    { id:"roja",     nombre:"Carne roja", max:3, ids:["ternera180","ternera150","picadamix150"] },
+    { id:"roja",     nombre:"Carne roja", max:3, ids:["ternera220","ternera180","ternera150","picadamix150"] },
     { id:"embutido", nombre:"Embutido",   max:2, ids:["jamonserrano60","queso30"] }
   ],
 
@@ -610,22 +649,22 @@ const DEFAULT_PLAN = {
       { id:"desayuno", nombre:"Desayuno", icon:"🍳", hora:{A:"8:15",B:"8:15"},
         modos:[
           { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
-            { id:"prot", nombre:"Proteína", tipo:"one", ops:["huevos32","huevos22","tortillaqueso","pavolonchas100","jamoncocido100","atun1"] },
-            { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint80","panint60","panint40","panmolde2","tortitas3","patata200"] },
+            { id:"prot", nombre:"Proteína", tipo:"one", ops:["huevos32","huevos22","tortillaqueso","pavolonchas150","jamoncocido150","atun2"] },
+            { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint100","panint80","panint60","panmolde3","patata250"] },
             { id:"veg",  nombre:"Verdura opcional", nota:"champiñón o pimiento en la tortilla", tipo:"one", ops:["champi150","pimicebolla100","tomatetrit100","espinacas150"] },
-            { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove5","aguacate80"] },
+            { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove10","aguacate80"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","lechesl200","agua","infusion"] }
           ]},
           { id:"dulce", fam:"Dulce", nombre:"Me la monto", grupos:[
-            { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","quesobatido250","yogurprot","yogurgriego150"] },
+            { id:"base", nombre:"Base", tipo:"one", ops:["lechesl400","lechesl300","quesobatido350","yogurprot","yogurgriego200"] },
             { id:"prot", nombre:"Proteína opcional", tipo:"one", ops:["prot30"] },
-            { id:"hc",   nombre:"Cereal", tipo:"one", ops:["avenasabor50","harinaavena50","cremaarroz50","avena40","avena30","cereales40","tortitas3","panint60"] },
-            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos15"] },
+            { id:"hc",   nombre:"Cereal", tipo:"one", ops:["avenasabor70","harinaavena70","cremaarroz70","avena60","cereales60","panint80"] },
+            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah20","fsecos20"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","agua","infusion"] }
           ]},
           { id:"suple", fam:"Dulce", nombre:"Con suple", grupos:[
             { id:"combo", nombre:"Combinación", nota:"con lo que ya tienes en casa", tipo:"one", ops:["cap_pancakes","cap_avenaprot","cap_cremaarrozprot"] },
-            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos15"] },
+            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah20","fsecos20"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","lechesl200","agua","infusion"] }
           ]}
         ],
@@ -634,17 +673,17 @@ const DEFAULT_PLAN = {
       { id:"mediamanana", nombre:"Media mañana", icon:"🥤", hora:{A:"11:30",B:"11:30"},
         modos:[
           { id:"batido", fam:"Dulce", nombre:"Batido", grupos:[
-            { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","agua"] },
+            { id:"base", nombre:"Base", tipo:"one", ops:["lechesl400","lechesl300","agua"] },
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["prot30"] },
-            { id:"hc",   nombre:"Hidrato opcional", nota:"la harina de avena se bebe bien dentro del batido", tipo:"one", ops:["harinaavena50","avenasabor50","avena30","avena40","tortitas3"] }
+            { id:"hc",   nombre:"Hidrato opcional", nota:"la harina de avena se bebe bien dentro del batido", tipo:"one", ops:["avenasabor50","harinaavena50","avena50","avena40","tortitas4"] }
           ]},
           { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
-            { id:"prot", nombre:"Proteína", tipo:"one", ops:["pavolonchas100","jamoncocido100","atun1","pechugalata2","huevos22","quesolight30"] },
-            { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint60","panint40","tortitas3","tortitas2"] }
+            { id:"prot", nombre:"Proteína", tipo:"one", ops:["pavolonchas150","jamoncocido150","atun2","pechugalata2","huevos22","quesolight60"] },
+            { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint80","panint60","tortitas4","tortitas3"] }
           ]},
           { id:"lacteo", fam:"Dulce", nombre:"Lácteo", grupos:[
-            { id:"prot", nombre:"Lácteo", tipo:"one", ops:["quesobatido250","yogurprot","yogurgriego150"] },
-            { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["avenasabor50","avena30","tortitas3","cereales40"] }
+            { id:"prot", nombre:"Lácteo", tipo:"one", ops:["quesobatido350","quesobatido250","yogurprot","yogurgriego200"] },
+            { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["avenasabor50","avena50","cereales60","tortitas4"] }
           ]}
         ],
         notas:[["Esta comida no se salta","Entre el desayuno y la comida hay más de seis horas. Este es el hueco donde antes aparecía el picoteo: si lo tapas, la comida de las 14:30 la haces tranquilo."],
@@ -652,10 +691,10 @@ const DEFAULT_PLAN = {
 
       { id:"comida", nombre:"Comida", icon:"🍽️", hora:{A:"14:30",B:"14:30"},
         grupos:[
-          { id:"prot", nombre:"Proteína", tipo:"one", ops:["pollo200","ternera180","cerdo180","picada150","picadamix150","merluza220","salmon150","gambas200","atun2","pechugalata2","legumbre250","huevos32"] },
-          { id:"hc",   nombre:"Hidratos", nota:"la patata es la que más llena por caloría", tipo:"one", ops:["patata400","patata350","patata300","boniato250","arroz90","arroz70","pasta90","pasta70","panint80"] },
+          { id:"prot", nombre:"Proteína", tipo:"one", ops:["pollo250","ternera220","cerdo220","picada200","picadamix150","merluza280","salmon180","gambas250","atun2","pechugalata3","legumbre350","huevos42"] },
+          { id:"hc",   nombre:"Hidratos", nota:"la patata es la que más llena por caloría", tipo:"one", ops:["patata450","patata400","patata350","arroz110","arroz90","pasta110","pasta90","boniato350","panint100"] },
           { id:"veg",  nombre:"Verdura", nota:"empieza por una porción y sube", tipo:"one", ops:["calabacin200","champi150","judiaverde200","espinacas200","esparragos150","pimicebolla100","tomatetrit100","cremacalab250"] },
-          { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove10","aove5"] },
+          { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove15","aove10"] },
           { id:"suple", nombre:"Suplemento", nota:"el omega 3 va con la comida principal", tipo:"many", ops:["omega3"] },
           { id:"postre", nombre:"Postre opcional", tipo:"one", ops:["cap_gelatina","cap_quesocanela","yogurprot","cap_yogurcacao","cap_flan","cafe","infusion","refrescozero"] }
         ],
@@ -666,12 +705,12 @@ const DEFAULT_PLAN = {
         modos:[
           { id:"dulce", fam:"Dulce", nombre:"Capricho", grupos:[
             { id:"capricho", nombre:"Capricho dulce", nota:"esto está en el plan, no es hacer trampas", tipo:"one", ops:["cap_natillas","cap_quesocanela","yogurprot","cap_helado","cap_crepe","cap_tortiyogur","cap_barrita","cap_tortichoco","cap_yogurcacao","cap_choco15","cap_choco10","cap_gelatina","cap_flan"] },
-            { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["tortitas2","tortitas3","panint40"] },
+            { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["tortitas4","tortitas3","panint40"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
           { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
-            { id:"prot", nombre:"Proteína", tipo:"one", ops:["pavolonchas100","jamoncocido100","atun1","pechugalata2","quesobatido250","quesolight30"] },
-            { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint40","tortitas3","tortitas2"] },
+            { id:"prot", nombre:"Proteína", tipo:"one", ops:["pavolonchas150","jamoncocido150","atun1","pechugalata2","quesobatido250","quesolight60"] },
+            { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint60","panint40","tortitas4"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
           { id:"suple", fam:"Dulce", nombre:"Con suple", grupos:[
@@ -679,19 +718,19 @@ const DEFAULT_PLAN = {
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
           { id:"batido", fam:"Dulce", nombre:"Batido", grupos:[
-            { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","agua"] },
+            { id:"base", nombre:"Base", tipo:"one", ops:["lechesl400","lechesl300","agua"] },
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["prot30"] },
-            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos20","fsecos15"] }
+            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah20","fsecos30","fsecos20"] }
           ]}
         ],
         notas:[["El dulce va aquí a propósito","Te gusta el dulce, así que el plan tiene un hueco fijo para el dulce. Prohibirlo es lo que hace que a los diez días se abandone todo. Elige uno, disfrútalo y no lo alargues."]] },
 
       { id:"cena", nombre:"Cena", icon:"🌙", hora:{A:"22:30",B:"22:30"},
         grupos:[
-          { id:"prot", nombre:"Proteína", tipo:"one", ops:["pollo150","pollo200","ternera150","cerdo150","picada150","merluza220","salmon150","gambas200","atun2","pechugalata2","huevos32","huevos22","tortillaqueso"] },
-          { id:"hc",   nombre:"Hidratos", tipo:"one", ops:["patata300","patata250","patata200","boniato250","arroz50","pasta50","panint60","panint40"] },
+          { id:"prot", nombre:"Proteína", tipo:"one", ops:["pollo200","pollo250","ternera180","cerdo180","picada200","merluza280","salmon150","gambas250","atun2","pechugalata3","huevos32","huevos22","tortillaqueso"] },
+          { id:"hc",   nombre:"Hidratos", tipo:"one", ops:["patata350","patata300","patata250","boniato250","arroz70","pasta70","panint80","panint60"] },
           { id:"veg",  nombre:"Verdura", tipo:"one", ops:["calabacin200","champi150","judiaverde200","espinacas200","esparragos150","pimicebolla100","tomatetrit100","cremacalab250"] },
-          { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove10","aove5"] },
+          { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove15","aove10"] },
           { id:"postre", nombre:"Postre opcional", tipo:"one", ops:["cap_gelatina","cap_quesocanela","yogurprot","cap_yogurcacao","cap_choco15","cap_choco10","cap_flan","infusion"] }
         ],
         notas:[["Cenas muy tarde","A las 22:30 conviene que la cena sea a la plancha o al horno y no frita: se digiere antes y molesta menos para dormir. Apunta abajo la hora real a la que cenaste."]] }
@@ -764,11 +803,11 @@ const DEFAULT_PLAN = {
     pie: "Si un producto de tu supermercado cumple lo que dice la ficha, vale igual. La marca da lo mismo: lo que no da lo mismo es el azúcar y la grasa de la etiqueta.",
     cats: [
       { cat:"Suplementación · iO.GENIX", items:[
-        { n:"Copos de avena de sabores", d:"1 cazo y medio · 50 g", foto:"fotos/avena-copos.webp",
+        { n:"Copos de avena de sabores", d:"1 cazo y medio o 2 · 50-70 g", foto:"fotos/avena-copos.webp",
           nota:"Para el tazón del desayuno o de la merienda, con un cazo de proteína." },
-        { n:"Harina de avena de sabores", d:"1 cazo y medio · 50 g", foto:"fotos/avena-harina.webp",
+        { n:"Harina de avena de sabores", d:"1 cazo y medio o 2 · 50-70 g", foto:"fotos/avena-harina.webp",
           nota:"Para los pancakes, o disuelta dentro del batido con la proteína." },
-        { n:"Crema de arroz", d:"1 cazo y medio · 50 g", foto:"fotos/crema-arroz.webp",
+        { n:"Crema de arroz", d:"1 cazo y medio o 2 · 50-70 g", foto:"fotos/crema-arroz.webp",
           nota:"Con agua o leche caliente y un cazo de proteína. Es lo que mejor cae al terminar de entrenar." },
         { n:"Proteína en polvo", d:"1 cazo · 30 g", foto:"fotos/proteina.webp",
           nota:"El cacito que viene dentro del bote. En el batido, en el tazón o en los pancakes." },
@@ -776,11 +815,11 @@ const DEFAULT_PLAN = {
           nota:"Una perla con la comida principal, siempre con comida, nunca en ayunas." }
       ]},
       { cat:"Lácteos y postres", items:[
-        { n:"Queso fresco batido 0 % sin lactosa", d:"1 tarrina · 250 g", foto:"fotos/queso-batido.webp",
+        { n:"Queso fresco batido 0 % sin lactosa", d:"1 tarrina · 250-350 g", foto:"fotos/queso-batido.webp",
           nota:"En la etiqueta: 0 % materia grasa y sin azúcares añadidos. Es la base de las natillas proteicas." },
         { n:"Natillas o yogures de proteína", d:"1 o 2 tarrinas", foto:"fotos/natillas-proteina.webp",
           nota:"Las de la foto traen 10 g de proteína y 97 kcal, así que dos tarrinas son una ración del plan. Si encuentras de 18-20 g, con una vas servido." },
-        { n:"Yogur griego 0 % sin lactosa", d:"1 yogur · 150 g", emoji:"🥣",
+        { n:"Yogur griego 0 % sin lactosa", d:"1 yogur · 200 g", emoji:"🥣",
           nota:"Griego 0 %, no 'estilo griego' azucarado." },
         { n:"Gelatina 0 % azúcares", d:"2 tarrinas", foto:"fotos/gelatina.webp",
           nota:"8 kcal la tarrina. Tarrinas hechas o sobres para preparar; ten cuatro en la nevera." },
@@ -788,21 +827,21 @@ const DEFAULT_PLAN = {
           nota:"El de la foto son 62 kcal y 10 g de proteína. Que diga sin azúcares añadidos." },
         { n:"Flan de clara de huevo proteico", d:"1 unidad · 160 g", foto:"fotos/flan-clara.webp",
           nota:"13 g de proteína y 0 % azúcares añadidos: es postre y es proteína a la vez. El mejor de la nevera." },
-        { n:"Queso light en lonchas", d:"2 lonchas · 30 g", foto:"fotos/queso-lonchas.webp",
+        { n:"Queso light en lonchas", d:"4 lonchas · 60 g", foto:"fotos/queso-lonchas.webp",
           nota:"Para dentro de la tortilla francesa. Light de verdad, no 'tierno'." },
         { n:"Queso en lonchas alto en proteína", d:"2 lonchas · 40 g", foto:"fotos/queso-lonchas-prot.webp",
           nota:"La alternativa al light cuando quieras que sepa más a queso: más proteína y el mismo sitio en el plan." },
-        { n:"Leche semidesnatada sin lactosa", d:"1 vaso · 200-300 ml", foto:"fotos/leche.webp",
+        { n:"Leche semidesnatada sin lactosa", d:"1 vaso o 1 tazón · 300-400 ml", foto:"fotos/leche.webp",
           nota:"Semi y sin lactosa, la que ya tomas." }
       ]},
       { cat:"Despensa", items:[
-        { n:"Tortitas de maíz o de arroz", d:"2 o 3 unidades", foto:"fotos/tortitas.webp",
+        { n:"Tortitas de maíz o de arroz", d:"3 o 4 unidades", foto:"fotos/tortitas.webp",
           nota:"Las de sabores valen igual mientras no lleven chocolate ni yogur por encima de fábrica: eso lo pones tú." },
         { n:"Chocolate 85 % sin azúcar añadido", d:"1 o 2 onzas · 10-15 g", foto:"fotos/chocolate85.webp",
           nota:"En tableta de onzas ya partidas: se controla mucho mejor que a mordiscos." },
-        { n:"Pan integral", d:"1 rebanada gruesa o 1 panecillo", emoji:"🍞",
+        { n:"Pan integral", d:"2-3 rebanadas o 1 panecillo · 60-100 g", emoji:"🍞",
           nota:"Que el primer ingrediente sea harina integral, no 'harina de trigo'." },
-        { n:"Cereales integrales sin azúcar", d:"1 taza pequeña · 40 g", emoji:"🥣",
+        { n:"Cereales integrales sin azúcar", d:"1 taza · 60 g", emoji:"🥣",
           nota:"Menos de 8 g de azúcar por 100 g. Si lleva miel o chocolate, no es." },
         { n:"Cacao puro desgrasado", d:"1 cucharada", foto:"fotos/cacao.webp",
           nota:"Puro, no soluble azucarado. Una cucharada convierte un queso batido en natillas." },
@@ -820,9 +859,9 @@ const DEFAULT_PLAN = {
           nota:"El rescate salado de la tarde. Casi sin calorías." }
       ]},
       { cat:"Nevera y congelador", items:[
-        { n:"Pechuga de pollo o pavo", d:"1 pechuga grande · 200 g", emoji:"🍗",
+        { n:"Pechuga de pollo o pavo", d:"1 pechuga grande · 200-250 g", emoji:"🍗",
           nota:"En filetes ya cortados se hace en cuatro minutos a la plancha." },
-        { n:"Pechuga de pollo al natural en lata", d:"2 latas · 160 g escurrido", emoji:"🥫",
+        { n:"Pechuga de pollo al natural en lata", d:"2 o 3 latas · 160-240 g escurrido", emoji:"🥫",
           nota:"La alternativa para el día que no tienes tiempo: se abre, se escurre y se come. Al natural, no en aceite. Ten dos en la tienda y dos en el coche." },
         { n:"Bote de patata cocida", d:"al peso, escurrida", foto:"fotos/patata-bote.webp",
           nota:"Tu hidrato principal, ya hecho. Mira que no lleve más que patata, agua y sal." },
@@ -836,9 +875,9 @@ const DEFAULT_PLAN = {
           nota:"Al natural, no en aceite. Escurrido." },
         { n:"Huevos cocidos de pack", d:"3 enteros + 2 claras", emoji:"🥚",
           nota:"Ya pelados, para no depender de tener tiempo." },
-        { n:"Gambas peladas cocidas", d:"media bolsa · 200 g", foto:"fotos/gambas.webp",
+        { n:"Gambas peladas cocidas", d:"media bolsa · 200-250 g", foto:"fotos/gambas.webp",
           nota:"La proteína más rápida que existe. Si van congeladas, la noche antes a la nevera y listo." },
-        { n:"Bote de lentejas o garbanzos", d:"medio bote escurrido · 250 g", foto:"fotos/lenteja-bote.webp",
+        { n:"Bote de lentejas o garbanzos", d:"1 bote escurrido · 350 g", foto:"fotos/lenteja-bote.webp",
           nota:"Hacen de proteína y de hidrato a la vez: ese día no añadas patata. Enjuágalas bajo el grifo." }
       ]}
     ]
@@ -928,33 +967,33 @@ const DEFAULT_PLAN = {
     nota: "Elige el plato, no los grupos. Cuentan como comida del plan, no como comida libre: el día que uses uno, no rellenes esa comida ahí arriba. El postre y el pan van aparte si te apetecen.",
     cats: [
       { cat:"Guisos y cuchara", sub:"sofrito corto, una cucharada de aceite y fuera el compango", items:[
-        ["mt_lentejas", "Lentejas con verduras, sin chorizo", "medio bote de lentejas + sofrito corto de pimiento y cebolla + zanahoria + 1 cucharada de aceite", 412, 21.1, 48.5, 11.7, "Comida", "La legumbre ya es proteína e hidrato: ese día no añadas patata. Sin chorizo ni morcilla baja 250 kcal y sabe igual.", ["legumbre250","pimicebolla100","aove10"]],
-        ["mt_carnepatatas", "Carne con patatas al chup-chup", "1 filete grande de ternera en dados + 1 patata grande + sofrito corto + tomate triturado + caldo", 636, 46.1, 66.8, 19.8, "Comida", "Hazlo la noche antes y quita en frío la capa blanca de grasa.", ["ternera180","patata300","pimicebolla100","tomatetrit100","aove10"]],
-        ["mt_potaje", "Potaje de garbanzos con espinacas", "medio bote de garbanzos + 2 puñados de espinacas + 2 lomos de merluza o bacalao + 1 cucharada de aceite", 624, 65.8, 49.2, 15.3, "Comida", "El de toda la vida, sin compango. Cunde para dos días.", ["legumbre250","espinacas200","merluza220","aove10"]],
-        ["mt_polloguisado", "Pollo guisado con verduras y patata", "1 pechuga grande en trozos + pimiento, cebolla y calabacín + tomate frito cero + 1 patata grande", 656, 56.5, 73, 16.4, "Comida", "El tomate frito 0 % le da el sabor de guiso sin el azúcar.", ["pollo200","pimicebolla100","calabacin200","tomatetrit100","patata300","aove10"]],
-        ["mt_marmitako", "Marmitako de bonito", "2 latas de bonito al natural + 1 patata grande + pimiento y cebolla + caldo de pescado", 568, 49.1, 63.5, 12.2, "Comida", "Veinte minutos usando el bonito de lata.", ["atun2","patata300","pimicebolla100","aove10"]],
-        ["mt_estofadopavo", "Estofado de pavo con champiñón", "1 hamburguesa grande de pavo desmenuzada + 1 bandeja de champiñones + tomate triturado + 1 plato de arroz", 629, 44.1, 74.3, 17, "Comida", "La verdura queda dentro del plato, no de guarnición al lado.", ["picada150","champi150","tomatetrit100","arroz90","aove10"]]
+        ["mt_lentejas", "Lentejas con verduras, sin chorizo", "1 bote de lentejas + sofrito corto de pimiento y cebolla + zanahoria + 1 cucharada de aceite", 496, 28.0, 58.8, 12.1, "Comida", "La legumbre ya es proteína e hidrato: ese día no añadas patata. Sin chorizo ni morcilla baja 250 kcal y sabe igual.", ["legumbre350","pimicebolla100","aove10"]],
+        ["mt_carnepatatas", "Carne con patatas al chup-chup", "1 filete grande de ternera en dados + 2 patatas grandes + sofrito corto + tomate triturado + caldo", 670, 46.0, 76.0, 19.5, "Comida", "Hazlo la noche antes y quita en frío la capa blanca de grasa.", ["ternera180","patata400","pimicebolla100","tomatetrit100","aove10"]],
+        ["mt_potaje", "Potaje de garbanzos con espinacas", "1 bote de garbanzos + 2 puñados de espinacas + 2 lomos de merluza o bacalao + 1 cucharada de aceite", 694, 68.0, 58.8, 15.1, "Comida", "El de toda la vida, sin compango. Cunde para dos días.", ["legumbre350","espinacas200","merluza220","aove10"]],
+        ["mt_polloguisado", "Pollo guisado con verduras y patata", "1 pechuga grande en trozos + pimiento, cebolla y calabacín + tomate frito cero + 2 patatas medianas", 613, 53.0, 67.0, 15.4, "Comida", "El tomate frito 0 % le da el sabor de guiso sin el azúcar.", ["pollo200","pimicebolla100","calabacin200","tomatetrit100","patata350","aove10"]],
+        ["mt_marmitako", "Marmitako de bonito", "2 latas de bonito al natural + 2 patatas grandes + pimiento y cebolla + caldo de pescado", 622, 50.0, 76.0, 12.1, "Comida", "Veinte minutos usando el bonito de lata.", ["atun2","patata400","pimicebolla100","aove10"]],
+        ["mt_estofadopavo", "Estofado de pavo con champiñón", "1 hamburguesa muy grande de pavo desmenuzada + 1 bandeja de champiñones + tomate triturado + 1 plato de arroz", 631, 49.2, 66.0, 17.6, "Comida", "La verdura queda dentro del plato, no de guarnición al lado.", ["picada200","champi150","tomatetrit100","arroz90","aove10"]]
       ]},
       { cat:"Plancha y horno", sub:"lo de todos los días, en quince minutos", items:[
-        ["mt_pollohorno", "Pollo al horno con patata y barbacoa cero", "1 pechuga grande + 2 patatas grandes en gajos + calabacín + 1 cucharada de aceite + salsa barbacoa 0 %", 690, 56.4, 82.2, 16.1, "Comida", "La salsa barbacoa 0 % no suma: úsala sin miedo.", ["pollo200","patata400","calabacin200","aove10"]],
-        ["mt_salmonesparragos", "Salmón al horno con espárragos", "1 pieza de salmón + 1 bote de espárragos + 1 patata grande", 602, 39.3, 62.4, 20.6, "Comida o cena", "El salmón ya trae su grasa: aquí no hace falta añadir aceite.", ["salmon150","esparragos150","patata300"]],
-        ["mt_merluzajudia", "Merluza a la plancha con judía verde", "2 lomos de merluza + 2 puñados de judía verde + 1 patata mediana + 1 cucharada de aceite", 524, 47.6, 52, 13.7, "Cena", "La cena más ligera que tienes.", ["merluza220","judiaverde200","patata200","aove10"]],
-        ["mt_hamburguesa", "Hamburguesa de pollo en pan integral", "1 hamburguesa grande + 1 panecillo integral + pimiento y cebolla a la plancha + 2 lonchas de queso light", 453, 49.1, 39.5, 9.3, "Comida o cena", "Hamburguesa de verdad, dentro del plan.", ["picada150","panint80","pimicebolla100","quesolight30"]],
-        ["mt_lomoboniato", "Lomo con boniato asado", "1 filete de lomo + 1 boniato mediano + 1 calabacín + 1 cucharada de aceite", 573, 45.4, 56.2, 18.9, "Comida", "El boniato al horno o en bolsa de microondas.", ["cerdo180","boniato250","calabacin200","aove10"]],
-        ["mt_tortillapatata", "Tortilla de patata sin freír", "1 patata mediana al microondas + 3 huevos + 2 claras + cebolla", 451, 31.1, 46.5, 15.5, "Cena", "Todo a la sartén con aceite en spray. Sin freír.", ["patata200","huevos32","pimicebolla100"]]
+        ["mt_pollohorno", "Pollo al horno con patata y barbacoa cero", "1 pechuga grande + 2 patatas grandes en gajos + calabacín + 1 cucharada de aceite + salsa barbacoa 0 %", 656, 54.0, 76.0, 15.5, "Comida", "La salsa barbacoa 0 % no suma: úsala sin miedo.", ["pollo200","patata400","calabacin200","aove10"]],
+        ["mt_salmonesparragos", "Salmón al horno con espárragos", "1 pieza grande de salmón + 1 bote de espárragos + 1 patata grande", 634, 42.0, 57.0, 24.4, "Comida o cena", "El salmón ya trae su grasa: aquí no hace falta añadir aceite.", ["salmon180","esparragos150","patata300"]],
+        ["mt_merluzajudia", "Merluza a la plancha con judía verde", "2 lomos de merluza + 2 puñados de judía verde + 1 patata mediana-grande + 1 cucharada de aceite", 505, 45.0, 48.0, 13.3, "Cena", "La cena más ligera que tienes.", ["merluza220","judiaverde200","patata250","aove10"]],
+        ["mt_hamburguesa", "Hamburguesa de pollo en pan integral", "1 hamburguesa muy grande + 1 panecillo integral grande + pimiento y cebolla a la plancha + 2 lonchas de queso light", 525, 60.5, 41.0, 11.1, "Comida o cena", "Hamburguesa de verdad, dentro del plan.", ["picada200","panint100","pimicebolla100","quesolight30"]],
+        ["mt_lomoboniato", "Lomo con boniato asado", "1 filete grande de lomo + 1 boniato grande + 1 calabacín + 1 cucharada de aceite", 677, 53.3, 70.0, 20.2, "Comida", "El boniato al horno o en bolsa de microondas.", ["cerdo220","boniato350","calabacin200","aove10"]],
+        ["mt_tortillapatata", "Tortilla de patata sin freír", "1 patata grande al microondas + 3 huevos + 2 claras + cebolla", 505, 32.0, 59.0, 15.4, "Cena", "Todo a la sartén con aceite en spray. Sin freír.", ["patata300","huevos32","pimicebolla100"]]
       ]},
       { cat:"Sartén rápida", sub:"cinco minutos, para el día que no hay tiempo", items:[
-        ["mt_revueltogambas", "Revuelto de espinacas y gambas", "1 bandeja de gambas cocidas + 2 porciones de espinacas congeladas + 2 huevos + 2 claras + 2 rebanadas de pan integral", 569, 72.8, 32.7, 14.8, "Cena", "Las espinacas van directas a la sartén, sin descongelar.", ["gambas200","espinacas200","huevos22","panint60"]],
-        ["mt_salteadoternera", "Salteado de ternera con pimiento y arroz", "1 filete de ternera en tiras + pimiento y cebolla + 1 plato de arroz + 1 cucharada de aceite", 677, 45.6, 72.5, 21.5, "Comida", "Ternera en tiras: se hace en cuatro minutos.", ["ternera180","pimicebolla100","arroz90","aove10"]],
-        ["mt_pastapavo", "Pasta con picada de pavo y tomate cero", "1 plato de pasta + 1 hamburguesa de pavo desmenuzada + tomate frito 0 % + champiñón", 537, 49.1, 72.3, 6.1, "Comida", "El tomate frito 0 % hace de salsa sin sumar.", ["pasta90","picada150","tomatetrit100","champi150"]],
-        ["mt_latapechuga", "Lata de pechuga con bote de patata", "2 latas de pechuga al natural + bote de patata cocida + bolsa de judía verde al microondas + 1 cucharada de aceite", 572, 43.6, 71, 13.8, "Comida o cena", "El plato de los días imposibles: cero cocina. Se abre, se escurre y se come.", ["pechugalata2","patata300","judiaverde200","aove10"]]
+        ["mt_revueltogambas", "Revuelto de espinacas y gambas", "1 bandeja grande de gambas cocidas + 2 porciones de espinacas congeladas + 2 huevos + 2 claras + 2 rebanadas de pan integral", 573, 77.5, 25.5, 14.5, "Cena", "Las espinacas van directas a la sartén, sin descongelar.", ["gambas250","espinacas200","huevos22","panint60"]],
+        ["mt_salteadoternera", "Salteado de ternera con pimiento y arroz", "1 filete de ternera en tiras + pimiento y cebolla + 1 plato de arroz + 1 cucharada de aceite", 645, 44.5, 66.0, 21.3, "Comida", "Ternera en tiras: se hace en cuatro minutos.", ["ternera180","pimicebolla100","arroz90","aove10"]],
+        ["mt_pastapavo", "Pasta con picada de pavo y tomate cero", "1 plato grande de pasta + 1 hamburguesa muy grande de pavo desmenuzada + tomate frito 0 % + champiñón", 610, 56.7, 78.0, 7.0, "Comida", "El tomate frito 0 % hace de salsa sin sumar.", ["pasta110","picada200","tomatetrit100","champi150"]],
+        ["mt_latapechuga", "Lata de pechuga con bote de patata", "3 latas de pechuga al natural + 1 bote grande de patata cocida + bolsa de judía verde al microondas + 1 cucharada de aceite", 633, 58.0, 67.0, 14.9, "Comida o cena", "El plato de los días imposibles: cero cocina. Se abre, se escurre y se come.", ["pechugalata3","patata350","judiaverde200","aove10"]]
       ]},
       { cat:"Desayunos y meriendas montados", sub:"los que no hay que pensar", items:[
-        ["mt_tostadatortilla", "Tostada de tortilla con queso y champiñón", "tortilla francesa con queso light + 1 panecillo integral + champiñones + 1 cucharadita de aceite + café con leche", 577, 40.6, 48, 23.6, "Desayuno", "La forma salada del desayuno, entera.", ["tortillaqueso","panint80","champi150","aove5","lechesl200"]],
-        ["mt_tazonavena", "Tazón de avena de sabores con proteína", "1 cazo y medio de copos de avena de sabores + 1 cazo de proteína + leche sin lactosa + 1 cucharada de crema de cacahuete", 493, 42, 42.4, 16, "Desayuno o merienda", "El atajo con suple, con la crema de cacahuete dentro.", ["cap_avenaprot","lechesl200","cremacacah15"]],
-        ["mt_pancakes", "Pancakes de avena y proteína con sirope 0 %", "50 g de harina de avena de sabores + 1 cazo de proteína + 2 claras + sirope 0 %", 344, 38, 32, 5.5, "Desayuno", "Tres o cuatro tortitas. El desayuno del domingo.", ["cap_pancakes"]],
-        ["mt_tortijamon", "Tortitas de maíz con jamón cocido", "3 tortitas de maíz + 4-5 lonchas de jamón cocido", 203, 20, 20.5, 4, "Media mañana o merienda", "Crujiente y salado, con la proteína dentro. Se monta en un minuto y es el mejor tentempié para la tienda.", ["cap_tortijamon"]],
-        ["mt_natillas", "Natillas proteicas caseras con tortitas", "1 tarrina de queso batido + 1 cucharada de cacao puro + unas gotas de edulcorante + 3 tortitas de maíz", 252, 24, 31, 2.1, "Merienda", "Postre y proteína a la vez, sin cocinar nada.", ["cap_natillas","tortitas3"]]
+        ["mt_tostadatortilla", "Tostada de tortilla con queso y champiñón", "tortilla francesa con queso light + 1 panecillo integral + champiñones + 1 cucharadita de aceite + café con leche", 544, 36.0, 43.0, 23.1, "Desayuno", "La forma salada del desayuno, entera.", ["tortillaqueso","panint80","champi150","aove5","lechesl200"]],
+        ["mt_tazonavena", "Tazón de avena de sabores con proteína", "1 cazo y medio de copos de avena de sabores + 1 cazo de proteína + leche sin lactosa + 1 cucharada de crema de cacahuete", 493, 42.0, 42.4, 16.0, "Desayuno o merienda", "El atajo con suple, con la crema de cacahuete dentro.", ["cap_avenaprot","lechesl200","cremacacah15"]],
+        ["mt_pancakes", "Pancakes de avena y proteína con sirope 0 %", "50 g de harina de avena de sabores + 1 cazo de proteína + 2 claras + sirope 0 %", 344, 38.0, 32.0, 5.5, "Desayuno", "Tres o cuatro tortitas. El desayuno del domingo.", ["cap_pancakes"]],
+        ["mt_tortijamon", "Tortitas de maíz con jamón cocido", "3 tortitas de maíz + 4-5 lonchas de jamón cocido", 203, 20.0, 20.5, 4.0, "Media mañana o merienda", "Crujiente y salado, con la proteína dentro. Se monta en un minuto y es el mejor tentempié para la tienda.", ["cap_tortijamon"]],
+        ["mt_natillas", "Natillas proteicas caseras con tortitas", "1 tarrina de queso batido + 1 cucharada de cacao puro + unas gotas de edulcorante + 3 tortitas de maíz", 252, 24.0, 31.0, 2.1, "Merienda", "Postre y proteína a la vez, sin cocinar nada.", ["cap_natillas","tortitas3"]]
       ]}
     ]
   },
@@ -1243,6 +1282,11 @@ function pesoMeta(){
   const P = S.plan.peso; if(!P) return null;
   return P.objetivo != null ? P.objetivo : P.techo;
 }
+/* recomposición: hay tendencia que mirar pero NO hay cifra a la que llegar.
+   La báscula deja de ser una meta y pasa a ser un control de estabilidad. */
+function esRecomp(){ return !!(S.plan.peso && S.plan.peso.vista === "recomp"); }
+/* con un solo pesaje semanal, hablar de "media de 7 días" engaña: es UN dato. */
+function unPesajeSemana(){ return !!(S.plan.peso && S.plan.peso.pesajesSemana === 1); }
 
 /* ---------- episodios de ansiedad (solo si el plan declara el módulo) ---------- */
 function episodios(iso){
@@ -1608,6 +1652,30 @@ function renderHoy(){
       <div class="tiny" style="margin-top:10px">${esc(P.nota || "")}</div>
     </div>`;
   }
+  /* peso corporal · modo recomposición: media de 7 días y ritmo, pero sin cifra
+     objetivo. Lo que se vigila es que el peso se mueva POCO mientras el entreno sube. */
+  else if(esRecomp()){
+    const P = S.plan.peso, m0 = mediaPeso(iso,0), rt = ritmoPeso(iso);
+    const ult = d.peso != null ? d.peso : "";
+    const ref = m0 != null ? m0 : ultimoPeso(iso);
+    const banda = P.bandaSemana != null ? P.bandaSemana : 0.35;
+    h += `<div class="card">
+      <h2>⚖️ Peso <span class="rt">${esc(P.cada || "3 mañanas por semana")}</span></h2>
+      <div class="steps">
+        <input id="inPeso" type="number" step="0.1" inputmode="decimal" placeholder="${P.inicial}" value="${ult}">
+        <button class="chipbtn" id="btnPesoOk">Guardar</button>
+      </div>
+      <div class="statgrid" style="margin-top:12px">
+        <div class="stat"><b>${m0!=null?m0.toFixed(1).replace(".",",")+" kg":"—"}</b><span>${unPesajeSemana()?"peso de la semana":"media de 7 días"}</span></div>
+        <div class="stat"><b>${ref!=null?(ref-P.inicial>=0?"+":"−")+Math.abs(ref-P.inicial).toFixed(1).replace(".",","):"—"} kg</b><span>desde ${String(P.inicial).replace(".",",")} kg</span></div>
+        <div class="stat"><b>${rt!=null?(rt>=0?"+":"−")+Math.abs(rt).toFixed(2).replace(".",","):"—"}</b><span>kg/semana</span></div>
+      </div>`;
+    if(rt != null && Math.abs(rt) > banda)
+      h += `<div class="note"><b>${rt>0?"Estás subiendo":"Estás bajando"} más rápido de lo que toca.</b> ${esc(P.aviso||"")}</div>`;
+    else
+      h += `<div class="tiny" style="margin-top:10px">${esc(P.nota || "")}</div>`;
+    h += `</div>`;
+  }
   else if(S.plan.peso){
     const P = S.plan.peso, def = esDeficit(), m0 = mediaPeso(iso,0), rt = ritmoPeso(iso);
     const ult = d.peso != null ? d.peso : "";
@@ -1748,8 +1816,11 @@ function renderHoy(){
         if(gr.tipo === "many") return nom + (gr.ops.length === 1
           ? ` <span class="el uno">siempre</span>`
           : ` <span class="el var">las que quieras</span>`);
-        return nom + (opc ? ` <span class="el opc">opcional</span>`
-                          : ` <span class="el uno">elige 1</span>`);
+        if(opc) return nom + ` <span class="el opc">opcional</span>`;
+        /* un grupo obligatorio con una sola opción no es una elección: es fijo */
+        return nom + (gr.ops.length === 1
+          ? ` <span class="el uno">siempre</span>`
+          : ` <span class="el uno">elige 1</span>`);
       })()}${gr.nota?` <em>· ${esc(gr.nota)}</em>`:""}</h3>`;
       gr.ops.forEach(fid=>{
         const f = food(fid); if(!f) return;
@@ -1991,7 +2062,11 @@ function ultimaSesion(iso, diaId, exIdx){
   return null;
 }
 function renderEntreno(){
-  const iso = S.ui.fecha, did = S.ui.diaEntreno;
+  const iso = S.ui.fecha;
+  /* el día guardado puede no existir en este plan (primer arranque, o un plan
+     con otros ids de día): en ese caso se cae al primero en vez de romperse. */
+  let did = S.ui.diaEntreno;
+  if(!S.plan.entrenos.some(x=>x.id===did)){ did = S.plan.entrenos[0].id; S.ui.diaEntreno = did; }
   const dEnt = S.plan.entrenos.find(x=>x.id===did);
   let h = `<div class="dsel">` + S.plan.entrenos.map(e=>
     `<button data-dia="${e.id}" class="${e.id===did?"on":""}">${esc(e.nombre)}<span>${esc(e.dia)}</span></button>`).join("") + `</div>`;
@@ -2013,7 +2088,9 @@ function renderEntreno(){
     const ult = ultimaSesion(iso, did, i);
     const sets = ses[i]||[];
     h += `<div class="ex">
-      <div class="exh"><div class="num">${i+1}</div><div class="exn">${esc(ex.n)}</div></div>
+      <div class="exh"><div class="num">${i+1}</div>${
+        (ex.icon && S.plan.iconos && S.plan.iconos[ex.icon]) ? S.plan.iconos[ex.icon] : ""
+      }<div class="exn">${esc(ex.n)}</div></div>
       <div class="exi"><b>${esc(ex.reps)}</b> · ${ex.series} ${ex.series>1?"series":"serie"}${ex.rest?` · descanso ${ex.rest>=60?(ex.rest/60).toString().replace(".5","½")+"'":ex.rest+"''"}`:" · enlazado"}</div>
       ${ex.spec?`<div class="spec">${esc(ex.spec)}</div>`:""}
       <table class="sets"><thead><tr><th></th><th>${ex.metro?"Lastre":"Peso"} kg</th><th>${ex.metro?"Metros":"Reps"}</th><th>RIR</th></tr></thead><tbody>`;
@@ -2036,7 +2113,7 @@ function renderEntreno(){
 }
 
 function actualizarStatsEntreno(){
-  const did = S.ui.diaEntreno, dEnt = S.plan.entrenos.find(x=>x.id===did);
+  const did = S.ui.diaEntreno, dEnt = (S.plan.entrenos||[]).find(x=>x.id===did);
   if(!dEnt) return;
   const ses = sesion(S.ui.fecha, did);
   let hechas=0, tot=0, vol=0;
@@ -2132,19 +2209,26 @@ function renderProgreso(){
       filas.push({ sem:"Semana del "+fechaLarga(addDias(fin,-6)).toLowerCase().replace(/^\w+ /,""),
                    m, d: prev!=null ? m-prev : null });
     }
-    const def = esDeficit(), meta = pesoMeta();
-    h += `<div class="card"><h2>⚖️ Peso · medias semanales <span class="rt">${def?"objetivo":"techo"} ${meta} kg</span></h2>`;
+    const def = esDeficit(), meta = pesoMeta(), rec = esRecomp();
+    const banda = P.bandaSemana != null ? P.bandaSemana : 0.35;
+    h += `<div class="card"><h2>⚖️ Peso · ${unPesajeSemana()?"semana a semana":"medias semanales"} <span class="rt">${
+      rec ? "±"+String(banda).replace(".",",")+" kg/semana" : (def?"objetivo":"techo")+" "+meta+" kg"}</span></h2>`;
     if(!filas.length) h += `<div class="muted">Todavía no hay pesajes. Con 2-3 por semana ya sale la media.</div>`;
     else {
       h += filas.map(f=>`<div class="frow"><div class="fn"><b>${f.m.toFixed(1).replace(".",",")} kg</b><i>${esc(f.sem)}</i></div>
         <div style="font-weight:650;font-size:12.5px;color:${
           f.d==null ? "var(--dim2)"
+          : rec ? (Math.abs(f.d) > banda ? "var(--warn)" : "var(--acc)")
           : def ? (-f.d > P.ritmoMax ? "var(--warn)" : f.d < 0 ? "var(--acc)" : "var(--dim2)")
                 : (f.d > P.ritmoMax ? "var(--warn)" : f.d < 0 ? "var(--hc)" : "var(--acc)")}">${
           f.d==null?"—":(f.d>=0?"+":"−")+Math.abs(f.d).toFixed(2).replace(".",",")}</div></div>`).join("");
       const total = filas[filas.length-1].m - P.inicial;
-      const recorrido = Math.abs(meta - P.inicial);
-      h += `<div class="tiny" style="margin-top:8px">Desde el inicio: ${(total>=0?"+":"−")+Math.abs(total).toFixed(1).replace(".",",")} kg de los ${recorrido.toFixed(0)} kg ${def?"que hay hasta el objetivo":"de margen"}. Ritmo objetivo ${String(P.ritmoObjetivo).replace(".",",")} kg/semana.</div>`;
+      if(rec)
+        h += `<div class="tiny" style="margin-top:8px">Desde el inicio: ${(total>=0?"+":"−")+Math.abs(total).toFixed(1).replace(".",",")} kg. Aquí no hay número al que llegar: mientras el peso se mueva poco y los entrenos suban, la composición está cambiando.</div>`;
+      else {
+        const recorrido = Math.abs(meta - P.inicial);
+        h += `<div class="tiny" style="margin-top:8px">Desde el inicio: ${(total>=0?"+":"−")+Math.abs(total).toFixed(1).replace(".",",")} kg de los ${recorrido.toFixed(0)} kg ${def?"que hay hasta el objetivo":"de margen"}. Ritmo objetivo ${String(P.ritmoObjetivo).replace(".",",")} kg/semana.</div>`;
+      }
     }
     h += `</div>`;
   }
@@ -2376,11 +2460,19 @@ function generarResumen(){
     const P = S.plan.peso, m0 = mediaPeso(base,0), rt = ritmoPeso(base), ref = m0!=null?m0:ultimoPeso(base);
     L.push("");
     L.push("*PESO*");
-    const def = esDeficit(), meta = pesoMeta();
-    L.push(m0!=null ? `· Media de la semana: ${m0.toFixed(1).replace(".",",")} kg` : "· Sin pesajes esta semana");
+    const def = esDeficit(), meta = pesoMeta(), rec = esRecomp();
+    const banda = P.bandaSemana != null ? P.bandaSemana : 0.35;
+    L.push(m0!=null ? `· ${unPesajeSemana()?"Peso":"Media"} de la semana: ${m0.toFixed(1).replace(".",",")} kg` : "· Sin pesajes esta semana");
+    if(rec){
+      if(rt!=null) L.push(`· Ritmo: ${(rt>=0?"+":"−")}${Math.abs(rt).toFixed(2).replace(".",",")} kg/semana (banda de recomposición ±${String(banda).replace(".",",")})`);
+      if(ref!=null) L.push(`· Total desde ${String(P.inicial).replace(".",",")} kg: ${(ref-P.inicial>=0?"+":"−")}${Math.abs(ref-P.inicial).toFixed(1).replace(".",",")} kg · sin cifra objetivo (recomposición)`);
+      if(rt!=null && Math.abs(rt) > banda) L.push(`· AVISO: el peso se mueve más de ±${String(banda).replace(".",",")} kg/semana, revisar registro antes de tocar calorías`);
+    } else {
     if(rt!=null) L.push(`· Ritmo: ${(rt>=0?"+":"−")}${Math.abs(rt).toFixed(2).replace(".",",")} kg/semana (objetivo ${def?"−":""}${String(P.ritmoObjetivo).replace(".",",")})`);
     if(ref!=null) L.push(`· Total desde ${String(P.inicial).replace(".",",")} kg: ${(ref-P.inicial>=0?"+":"−")}${Math.abs(ref-P.inicial).toFixed(1).replace(".",",")} kg · ${def?"falta hasta":"margen hasta"} ${meta} kg: ${Math.abs(meta-ref).toFixed(1).replace(".",",")} kg`);
-    if(def){
+    }
+    if(rec){ /* el aviso de recomposición ya se ha puesto arriba */ }
+    else if(def){
       if(rt!=null && -rt > P.ritmoMax) L.push("· AVISO: baja más rápido de lo previsto, valorar subir 150-200 kcal");
       else if(rt!=null && m0!=null && -rt < (P.ritmoMin!=null?P.ritmoMin:0.05)) L.push("· AVISO: semana plana o al alza, revisar registro antes de tocar calorías");
     } else {
