@@ -51,6 +51,7 @@ header{
 .tipoSw{display:flex;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .tipoSw button{background:none;border:0;padding:7px 11px;font-size:12px;color:var(--dim);cursor:pointer;font-weight:600}
 .tipoSw button.on{background:var(--acc);color:#07231b}
+.tipoSw.t4 button{padding:7px 7px;font-size:11px}
 
 /* ---------- generic ---------- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:12px 0}
@@ -249,6 +250,10 @@ header{
 .ejsvg .fl{stroke-width:1.9;opacity:.85}
 .ejsvg .re{fill:currentColor;stroke:none;opacity:.9}
 .ejsvg .pt{stroke-width:4.6}
+/* fila de drop set: debajo de las series, no suma */
+.sets tr.droprow td{border-top:1px dashed var(--line);padding-top:6px}
+.sets tr.droprow td:first-child{color:var(--acc);font-weight:700}
+.sets td.dropnota{font-size:10.5px;color:var(--dim2);text-align:center}
 .ex .exn{font-weight:650;font-size:14px;flex:1;line-height:1.3}
 .ex .exi{font-size:11.5px;color:var(--dim2);margin-bottom:9px}
 .ex .exi b{color:var(--dim);font-weight:600}
@@ -380,7 +385,7 @@ nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width
 
 const DEFAULT_PLAN = {
   cliente: "Juan",
-  version: "mes 1 · comer bien · sep 2026",
+  version: "comer bien · desayuno corto desde 10 oct",
   almacen: "juan_app_v1",
   /* Un solo objetivo y una sola estructura de comidas: entrene o no, lo mismo. */
   tipoUnico: true,
@@ -465,6 +470,19 @@ const DEFAULT_PLAN = {
     lechesl200:   ["Leche semi sin lactosa", "200 ml", 93, 7, 9, 3, "1 vaso"],
     lechesl400:    ["Leche semi sin lactosa", "400 ml", 187, 13.3, 18.7, 6, "1 tazón"],
     quesolight30: ["Queso light en lonchas", "30 g", 60, 9, 1, 2.5, "2 lonchas"],
+    // desayuno corto del 10/10 · etiquetas de los productos que ha pasado Alfonso
+    colacao0:     ["Cola Cao 0 % azúcares añadidos", "15 g", 49, 1.8, 6.6, 0.9, "1 cucharada colmada"],
+    creatina3:    ["Creatina (suple)", "3 g", 0, 0, 0, 0, "1 cacito"],
+    gall_sondey2: ["Galletas Sondey 0 % azúcares con pepitas de chocolate", "25 g", 101, 2.2, 13.6, 4.8, "2 galletas"],
+    gall_natruly: ["Galletas de cacao Natruly", "25 g", 95, 1.8, 12, 4.1, "2 galletas"],
+    barr_natruly: ["Barrita de cacao Natruly", "30 g", 134, 3.3, 13.5, 6.9, "1 barrita"],
+    barr_barebells:["Barebells Soft Salted Peanut Caramel", "55 g", 217, 16, 16, 11, "1 barrita"],
+    havarti40:    ["Queso havarti light en lonchas", "40 g", 108, 11.2, 0.2, 6.8, "2 lonchas"],
+    havarti20:    ["Queso havarti light en lonchas", "20 g", 54, 5.6, 0.1, 3.4, "1 loncha"],
+    mozza50:      ["Mozzarella light", "50 g", 85, 10, 0.7, 4.8, "media bola o 3 lonchas"],
+    mozza25:      ["Mozzarella light", "25 g", 43, 5, 0.4, 2.4, "1-2 lonchas"],
+    pavolonchas60:["Pavo o pollo en lonchas", "60 g", 69, 11.4, 0.7, 2.2, "3 lonchas"],
+    jamonserrano30:["Jamón serrano", "30 g", 72, 9.5, 0.1, 3.8, "2 lonchas"],
     quesolight60:  ["Queso light en lonchas", "60 g", 120, 18, 2, 5, "4 lonchas"],
     queso30:      ["Queso tierno o semicurado", "30 g", 105, 7.5, 0.5, 8, "1 loncha gruesa"],
     // ---- hidratos: la patata manda, y el pan es integral ----
@@ -556,8 +574,9 @@ const DEFAULT_PLAN = {
     { id:"prot", nombre:"Proteínas", icon:"🥩", ids:[
       "pollo200","pollo150","ternera180","ternera150","cerdo180","cerdo150","picada150","picadamix150",
       "merluza220","salmon150","atun2","atun1","gambas200","huevos32","huevos22","tortillaqueso",
-      "pavolonchas100","jamoncocido100","jamonserrano60","legumbre250","prot30","pechugalata2",
+      "pavolonchas100","pavolonchas60","jamoncocido100","jamonserrano60","jamonserrano30","legumbre250","prot30","pechugalata2",
       "quesobatido250","quesobatido125","yogurprot","yogurgriego150","lechesl300","lechesl200","quesolight30",
+      "havarti40","havarti20","mozza50","mozza25","barr_barebells",
       "cap_natillas","cap_quesocanela","cap_yogurcacao","cap_helado","cap_gelatina","cap_barrita",
       "cap_tortiyogur","cap_tortijamon","cap_pancakes","cap_avenaprot"] },
     { id:"hc", nombre:"Hidratos de carbono", icon:"🥔", ids:[
@@ -565,6 +584,7 @@ const DEFAULT_PLAN = {
       "arroz90","arroz70","arroz50","pasta90","pasta70","pasta50",
       "panint80","panint60","panint40","panmolde2","cereales40","avena40","avena30",
       "avenasabor50","harinaavena50","cremaarroz50","tortitas3","tortitas2",
+      "gall_sondey2","gall_natruly","barr_natruly","colacao0",
       "cap_tortichoco","cap_crepe","cap_flan","cap_cremaarrozprot"] },
     { id:"gra", nombre:"Grasas", icon:"🥑", ids:[
       "aove15","aove10","aove5","fsecos20","fsecos15","cremacacah15","aguacate80","queso30","omega3",
@@ -574,12 +594,12 @@ const DEFAULT_PLAN = {
       ids:["espinacas200","espinacas150","esparragos150","calabacin200","champi150",
            "judiaverde200","pimicebolla100","tomatetrit100","cremacalab250"] }
   ],
-  sinAporte: ["agua","aguagas","refrescozero","cafe","infusion"],
+  sinAporte: ["agua","aguagas","refrescozero","cafe","infusion","creatina3"],
 
   /* --- LÍMITES SEMANALES --- */
   limitesSemana: [
     { id:"roja",     nombre:"Carne roja", max:3, ids:["ternera220","ternera180","ternera150","picadamix150"] },
-    { id:"embutido", nombre:"Embutido",   max:2, ids:["jamonserrano60","queso30"] }
+    { id:"embutido", nombre:"Embutido",   max:2, ids:["jamonserrano60","jamonserrano30","queso30"] }
   ],
 
   /* --- CENA Y DESCANSO NOCTURNO --- */
@@ -641,27 +661,50 @@ const DEFAULT_PLAN = {
     entreno: [
       { id:"desayuno", nombre:"Desayuno", icon:"🍳", hora:{A:"8:15",B:"8:15"},
         modos:[
-          { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
+          { id:"dulce2", fam:"Dulce", nombre:"Vaso de leche", desde:"2026-10-10", grupos:[
+            { id:"leche", nombre:"Vaso de leche", tipo:"one", ops:["lechesl200"] },
+            { id:"cacao", nombre:"Cola Cao 0 % opcional", tipo:"one", ops:["colacao0"] },
+            { id:"protx", nombre:"Cazo de proteína opcional", nota:"dentro del mismo vaso", tipo:"one", ops:["prot30"] },
+            { id:"gall", nombre:"Galletas o barrita zero", nota:"la Barebells ya trae 16 g de proteína: ese día no hace falta el cazo", tipo:"one", ops:["gall_sondey2","gall_natruly","barr_natruly","barr_barebells"] },
+            { id:"crea", nombre:"Creatina", nota:"dentro del mismo vaso de leche, todos los días", tipo:"many", ops:["creatina3"] }
+          ]},
+          { id:"salado2", fam:"Salada", nombre:"Tortitas", desde:"2026-10-10", grupos:[
+            { id:"tort", nombre:"Tortitas de arroz o maíz", tipo:"one", ops:["tortitas3"] },
+            { id:"queso", nombre:"Queso en lonchas", nota:"havarti light, mozzarella light o queso light", tipo:"one", ops:["havarti40","mozza50","quesolight30"] },
+            { id:"fiambre", nombre:"Fiambre", nota:"pollo o pavo con 90 % de carne o más, o jamón serrano", tipo:"one", ops:["pavolonchas100","jamonserrano60"] },
+            { id:"crea", nombre:"Creatina", nota:"en un vaso de agua: el día de salado también va", tipo:"many", ops:["creatina3"] }
+          ]},
+          { id:"mix", fam:"Mixta", nombre:"Dulce + salado", desde:"2026-10-10", grupos:[
+            { id:"leche", nombre:"Vaso de leche", tipo:"one", ops:["lechesl200"] },
+            { id:"cacao", nombre:"Cola Cao 0 % opcional", tipo:"one", ops:["colacao0"] },
+            { id:"tort", nombre:"Tortitas de arroz o maíz", tipo:"one", ops:["tortitas2"] },
+            { id:"queso", nombre:"Queso en lonchas", nota:"menos cantidad que en la salada, para que cuadre", tipo:"one", ops:["havarti20","mozza25"] },
+            { id:"fiambre", nombre:"Fiambre", nota:"pollo o pavo con 90 % de carne o más, o jamón serrano", tipo:"one", ops:["pavolonchas60","jamonserrano30"] },
+            { id:"crea", nombre:"Creatina", nota:"dentro del vaso de leche, todos los días", tipo:"many", ops:["creatina3"] }
+          ]},
+          { id:"salado", fam:"Salada", nombre:"Salada", hasta:"2026-10-09", grupos:[
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["huevos32","huevos22","tortillaqueso","pavolonchas100","jamoncocido100","atun1"] },
             { id:"hc",   nombre:"Hidrato", tipo:"one", ops:["panint80","panint60","panint40","panmolde2","tortitas3","patata200"] },
             { id:"veg",  nombre:"Verdura opcional", nota:"champiñón o pimiento en la tortilla", tipo:"one", ops:["champi150","pimicebolla100","tomatetrit100","espinacas150"] },
             { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove5","aguacate80"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","lechesl200","agua","infusion"] }
           ]},
-          { id:"dulce", fam:"Dulce", nombre:"Me la monto", grupos:[
+          { id:"dulce", fam:"Dulce", nombre:"Me la monto", hasta:"2026-10-09", grupos:[
             { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","quesobatido250","yogurprot","yogurgriego150"] },
             { id:"prot", nombre:"Proteína opcional", tipo:"one", ops:["prot30"] },
             { id:"hc",   nombre:"Cereal", tipo:"one", ops:["avenasabor50","harinaavena50","cremaarroz50","avena40","avena30","cereales40","tortitas3","panint60"] },
             { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos15"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","agua","infusion"] }
           ]},
-          { id:"suple", fam:"Dulce", nombre:"Con suple", grupos:[
+          { id:"suple", fam:"Dulce", nombre:"Con suple", hasta:"2026-10-09", grupos:[
             { id:"combo", nombre:"Combinación", nota:"con lo que ya tienes en casa", tipo:"one", ops:["cap_pancakes","cap_avenaprot","cap_cremaarrozprot"] },
             { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos15"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","lechesl200","agua","infusion"] }
           ]}
         ],
-        notas:[["Después de andar","Desayunas al volver del paseo de las 7:00. Es la comida que decide cómo llegas a media mañana: si la haces corta, a las once estás vacío."]] },
+        notas:[["Desayuno corto, a propósito","Desde el 10 de octubre el desayuno es pequeño, porque a primera hora no te entra más. Lo que le falta no se pierde: va a la merienda y al postre de la cena. Elige una de las tres formas."],
+               ["Los días que te levantes con más hambre","La mixta: el vaso de leche y unas tortitas con queso y fiambre. Lleva menos queso y menos fiambre que la salada para que cuadre igual."],
+               ["La creatina, en el vaso","3 g cada día dentro del vaso de leche, así no se te olvida. El día que desayunes salado, en un vaso de agua."]] },
 
       { id:"mediamanana", nombre:"Media mañana", icon:"🥤", hora:{A:"11:30",B:"11:30"},
         modos:[
@@ -698,7 +741,7 @@ const DEFAULT_PLAN = {
         modos:[
           { id:"dulce", fam:"Dulce", nombre:"Capricho", grupos:[
             { id:"capricho", nombre:"Capricho dulce", nota:"esto está en el plan, no es hacer trampas", tipo:"one", ops:["cap_natillas","cap_quesocanela","yogurprot","cap_helado","cap_crepe","cap_tortiyogur","cap_barrita","cap_tortichoco","cap_yogurcacao","cap_choco15","cap_choco10","cap_gelatina","cap_flan"] },
-            { id:"hc",   nombre:"Hidrato opcional", tipo:"one", ops:["tortitas2","tortitas3","panint40"] },
+            { id:"hc",   nombre:"Hidrato", nota:"desde el 10/10 va siempre: es parte de lo que le quitamos al desayuno", tipo:"one", ops:["tortitas2","tortitas3","panint40"] },
             { id:"beb",  nombre:"Bebida", tipo:"many", ops:["cafe","infusion","refrescozero","agua"] }
           ]},
           { id:"salado", fam:"Salada", nombre:"Salada", grupos:[
@@ -713,7 +756,7 @@ const DEFAULT_PLAN = {
           { id:"batido", fam:"Dulce", nombre:"Batido", grupos:[
             { id:"base", nombre:"Base", tipo:"one", ops:["lechesl300","lechesl200","agua"] },
             { id:"prot", nombre:"Proteína", tipo:"one", ops:["prot30"] },
-            { id:"gra",  nombre:"Grasa opcional", tipo:"one", ops:["cremacacah15","fsecos20","fsecos15"] }
+            { id:"gra",  nombre:"Grasa", nota:"desde el 10/10 va siempre", tipo:"one", ops:["cremacacah15","fsecos20","fsecos15"] }
           ]}
         ],
         notas:[["El dulce va aquí a propósito","Te gusta el dulce, así que el plan tiene un hueco fijo para el dulce. Prohibirlo es lo que hace que a los diez días se abandone todo. Elige uno, disfrútalo y no lo alargues."]] },
@@ -724,9 +767,10 @@ const DEFAULT_PLAN = {
           { id:"hc",   nombre:"Hidratos", tipo:"one", ops:["patata300","patata250","patata200","boniato250","arroz50","pasta50","panint60","panint40"] },
           { id:"veg",  nombre:"Verdura", tipo:"one", ops:["calabacin200","champi150","judiaverde200","espinacas200","esparragos150","pimicebolla100","tomatetrit100","cremacalab250"] },
           { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove10","aove5"] },
-          { id:"postre", nombre:"Postre opcional", tipo:"one", ops:["cap_gelatina","cap_quesocanela","yogurprot","cap_yogurcacao","cap_choco15","cap_choco10","cap_flan","infusion"] }
+          { id:"postre", nombre:"Postre", nota:"desde el 10/10 va siempre: es la otra parte de lo que le quitamos al desayuno", tipo:"one", ops:["cap_quesocanela","yogurprot","cap_yogurcacao","cap_choco15","cap_flan"] }
         ],
-        notas:[["Cenas muy tarde","A las 22:30 conviene que la cena sea a la plancha o al horno y no frita: se digiere antes y molesta menos para dormir. Apunta abajo la hora real a la que cenaste."]] }
+        notas:[["El postre ya no es opcional","Desde que el desayuno es más corto, el postre de la cena va siempre. La gelatina y la infusión ya no cuentan como postre aquí: elige uno de los cinco."],
+               ["Cenas muy tarde","A las 22:30 conviene que la cena sea a la plancha o al horno y no frita: se digiere antes y molesta menos para dormir. Apunta abajo la hora real a la que cenaste."]] }
     ]
   },
 
@@ -736,14 +780,10 @@ const DEFAULT_PLAN = {
   /* --- IDEAS DE PLATOS --- */
   ideas: {
     desayuno: [
-      ["Tortilla francesa con queso light", "2 huevos batidos con 2 lonchas de queso light dentro, 2 rebanadas de pan integral tostado y café con leche sin lactosa. Dos minutos de sartén."],
-      ["Pancakes de harina de avena (suple)", "1 cazo y medio de harina de avena de sabores + 1 cazo de proteína + 2 claras. A la sartén sin aceite, en tres o cuatro tortitas. 38 g de proteína y sabe a desayuno de domingo."],
-      ["Tazón de copos de avena de sabores (suple)", "1 cazo y medio de copos + 1 cazo de proteína + leche sin lactosa. Se puede dejar hecho la noche antes en la nevera."],
-      ["Tortilla de champiñón con pan", "3 huevos enteros + 2 claras con una bandeja de champiñón laminado, una cucharadita de aceite y 2 rebanadas gruesas de pan integral."],
-      ["Revuelto de pavo", "5-6 lonchas de pavo troceadas con 2 huevos enteros + 2 claras y pimiento con cebolla. 1 rebanada de pan integral."],
-      ["Tortitas de maíz con jamón", "3 tortitas de maíz con 4-5 lonchas de jamón cocido y un café. Cero cocina."],
-      ["Yogur proteico con cereales", "1 tarrina de yogur o natillas de proteína + 1 taza pequeña de cereales integrales sin azúcar."],
-      ["Patata revuelta", "1 patata mediana cocida de bote salteada con 3 huevos y espinacas. Seis minutos en la misma sartén."]
+      ["Vaso de Cola Cao con galletas", "Leche sin lactosa con una cucharada de Cola Cao 0 % y la creatina dentro. Dos galletas Sondey o una barrita al lado. Dos minutos y listo."],
+      ["Batido de chocolate con proteína", "El mismo vaso con el cazo de proteína de chocolate batido dentro: sabe a batido de cacao y son 24 g de proteína más."],
+      ["Tortitas con pavo y queso", "Tres tortitas con una loncha de queso y el pavo encima, o con jamón serrano. Se come de pie si vas con prisa."],
+      ["Mixto de los días con hambre", "Vaso de leche con Cola Cao y dos tortitas con una loncha de havarti y tres de pavo."]
     ],
     mediamanana: [
       ["Batido con harina de avena (suple)", "1 vaso grande de leche sin lactosa + 1 cazo de proteína + 1 cazo y medio de harina de avena. Se bebe, no hay que masticar nada, y es el mejor tentempié para la tienda."],
@@ -795,6 +835,24 @@ const DEFAULT_PLAN = {
     nota: "La lista de la compra con cara. Los que llevan foto son el producto tal cual, para que lo reconozcas en el lineal; en los que todavía no la tienen, lo que manda es lo que dice la ficha, que es lo que hay que mirar en la etiqueta.",
     pie: "Si un producto de tu supermercado cumple lo que dice la ficha, vale igual. La marca da lo mismo: lo que no da lo mismo es el azúcar y la grasa de la etiqueta.",
     cats: [
+      { cat:"Desayuno corto · desde el 10/10", items:[
+        { n:"Cola Cao 0 % azúcares añadidos", d:"1 cucharada colmada · 15 g", emoji:"🥛",
+          nota:"El de 0 % azúcares añadidos, no el normal. Opcional, en el vaso de leche." },
+        { n:"Galletas Sondey 0 % azúcares con pepitas de chocolate", d:"2 galletas · 25 g", foto:"fotos/galletas-sondey.webp",
+          nota:"Las de Lidl, en paquetitos de 4: medio paquetito por desayuno." },
+        { n:"Galletas de cacao Natruly", d:"2 galletas · 25 g", foto:"fotos/galletas-natruly.webp",
+          nota:"Sin azúcar añadido y sin edulcorantes." },
+        { n:"Barritas de cacao Natruly", d:"1 barrita · 30 g", foto:"fotos/barritas-natruly.webp",
+          nota:"Llevan dátil: dulces sin azúcar añadido. Una por desayuno." },
+        { n:"Barebells Soft Salted Peanut Caramel", d:"1 barrita · 55 g", foto:"fotos/barebells.webp",
+          nota:"16 g de proteína: el día que la tomes, no hace falta el cazo en el vaso." },
+        { n:"Queso havarti light o mozzarella light", d:"1-2 lonchas", emoji:"🧀",
+          nota:"En lonchas, para las tortitas. Light de verdad." },
+        { n:"Pechuga de pavo o pollo en lonchas", d:"3-5 lonchas", emoji:"🥪",
+          nota:"Que en la etiqueta ponga 90 % de carne o más. Si no, el resto es fécula y agua." },
+        { n:"Creatina", d:"1 cacito · 3 g", emoji:"🥄",
+          nota:"Todos los días, dentro del vaso de leche del desayuno." }
+      ]},
       { cat:"Suplementación · iO.GENIX", items:[
         { n:"Copos de avena de sabores", d:"1 cazo y medio · 50 g", foto:"fotos/avena-copos.webp",
           nota:"Para el tazón del desayuno o de la merienda, con un cazo de proteína." },
@@ -1179,7 +1237,7 @@ const DEFAULT_PLAN = {
   medico: {
     nombre: "Pendiente de médico",
     items: [
-      ["Creatina: en espera", "No la empieces hasta que el urólogo lo confirme, después de la operación de uretra. Cuando dé el visto bueno, se añade al plan con su dosis. Hasta entonces no la tomes aunque te la recomienden. El resto de lo que tomas (proteína, avena, crema de arroz, omega 3) es comida y no tiene nada que ver con eso."],
+      ["Creatina: desde el 10 de octubre", "3 g al día dentro del vaso de leche del desayuno. Bebe agua durante el día como siempre. Si notas cualquier molestia al orinar, déjala y avísame ese mismo día."],
       ["Estudio del sueño · día 15", "Prueba de apneas. Cuando tengas el informe, mándalo. Si sale apnea, la cena de las 22:30 y la postura para dormir pasan a ser parte del plan, no un consejo."],
       ["Estenosis operada con balón", "Sin limitaciones según lo que has confirmado. Si en algún momento notas que un plato te cuesta pasarlo o se queda parado, deja de comerlo y avisa el mismo día."],
       ["Rodilla", "Molestia puntual, tipo punzada. El paseo de la mañana es lo mejor que puedes hacer por ella. Si un día pincha de verdad, no lo fuerces: acorta el paseo y dilo."],
@@ -1197,7 +1255,7 @@ const DEFAULT_PLAN = {
     "Los días de tienda se ganan la noche antes, dejando el táper hecho.",
     "Estas primeras semanas puedes coger TODOS los opcionales del día: la verdura, el hidrato de la media mañana, las grasas y los postres. Es mejor que te sobre comida buena que quedarte corto y acabar picando por la tarde.",
     "Un capricho dulce al día está dentro del plan. Elígelo, disfrútalo y no lo alargues.",
-    "Suplementación: proteína, copos o harina de avena y crema de arroz según la comida que te toque, y 1 perla de omega 3 con la comida principal. La creatina queda a la espera de lo que diga el urólogo.",
+    "Suplementación: proteína, copos o harina de avena y crema de arroz según la comida que te toque, y 1 perla de omega 3 con la comida principal. Creatina: 3 g cada día dentro del vaso de leche del desayuno (con agua el día que desayunes salado).",
     "En la pestaña Plan tienes «Qué comprar» con la foto de cada producto, para que no dudes en la estantería.",
     "Si has comido uno de los platos ya montados —un guiso, algo de plancha, un plato rápido—, añádelo en «Platos y guisos ya montados» y no rellenes esa comida arriba: las cantidades ya están cuadradas."
   ]
@@ -1264,6 +1322,7 @@ function fechaLarga(iso){
 }
 function dowNum(iso){ return new Date(iso+"T12:00:00").getDay(); }
 function tipoPorDefecto(iso){
+  if(S.plan && S.plan.tipoSemana && S.plan.tipoSemana[dowNum(iso)]) return S.plan.tipoSemana[dowNum(iso)];
   const d = (S.plan && S.plan.diasEntreno) || [1,3,5];
   return d.includes(dowNum(iso)) ? "entreno" : "descanso";
 }
@@ -1336,8 +1395,47 @@ function dia(iso){
    estructuras de comidas duplicadas en el fichero del plan. */
 function comidasDe(tipo){ return S.plan.dias[tipo] || S.plan.dias.entreno; }
 function objetivoDe(tipo){ return S.plan.objetivos[tipo] || S.plan.objetivos.entreno; }
-function comidasDelDia(iso){ return comidasDe(dia(iso).tipo); }
+/* Una comida con `hasta:"AAAA-MM-DD"` deja de existir a partir del día siguiente.
+   Los días anteriores la siguen viendo y sumando, y cualquier día que ya tenga algo
+   apuntado en ella también: retirar una comida nunca reescribe el histórico. */
+function comidaVigente(iso, m){
+  if(!m.hasta || iso <= m.hasta) return true;
+  const sel = S.log[iso] && S.log[iso].sel && S.log[iso].sel[m.id];
+  return !!(sel && Object.keys(sel).length);
+}
+function comidasDelDia(iso){ return comidasDe(dia(iso).tipo).filter(m=>comidaVigente(iso, m)); }
 function objetivo(iso){ return objetivoDe(dia(iso).tipo); }
+/* Más de dos tipos de día (plan.tiposDia). Sin la clave, los dos de siempre. */
+function tiposDia(){ return S.plan.tiposDia || [{id:"entreno",nombre:"Entreno"},{id:"descanso",nombre:"Descanso"}]; }
+function nombreTipo(id){ const t = tiposDia().find(x=>x.id===id); return t ? t.nombre.toLowerCase() : id; }
+function pintarTipos(){
+  const sw = $("#tipoSw");
+  if(!S.plan.tiposDia || !sw || sw.dataset.hecho) return;
+  sw.innerHTML = S.plan.tiposDia.map(t=>`<button data-t="${t.id}">${esc(t.corto||t.nombre)}</button>`).join("");
+  sw.classList.toggle("t4", S.plan.tiposDia.length > 2);
+  sw.dataset.hecho = "1";
+}
+/* Bloque de N semanas (plan.bloque): qué semana cae una fecha. null si el plan no lo trae. */
+function semanaBloque(iso){
+  const B = S.plan.bloque; if(!B || !B.semanas || !B.semanas.length) return null;
+  const k = Math.floor((Date.parse(iso+"T12:00:00") - Date.parse(B.inicio+"T12:00:00")) / (7*864e5));
+  const i = Math.max(0, Math.min(B.semanas.length-1, k));
+  return { n:i+1, tot:B.semanas.length, antes:k<0, despues:k>=B.semanas.length, s:B.semanas[i] };
+}
+/* Un ejercicio con los cambios de su semana: primero la descarga, luego lo propio de esa semana. */
+function exDe(ex, iso){
+  const w = semanaBloque(iso); if(!w) return ex;
+  return Object.assign({}, ex, ((w.s.descarga || w.s.ligera) && ex.desc) || {}, (ex.sem && ex.sem[w.n]) || {});
+}
+/* Sesiones que existen la semana de esa fecha. */
+function entrenosDe(iso){
+  const w = semanaBloque(iso), L = S.plan.entrenos || [];
+  if(!w) return L;
+  return L.filter(e => (!e.semanas || e.semanas.includes(w.n)) && (!e.salvo || !e.salvo.includes(w.n)));
+}
+/* Una serie está hecha si tiene reps; en carrera, si tiene tiempo o RPE. */
+function serieHecha(ex, s){ return !!(s && (ex.carrera ? (s.t || s.rpe) : s.reps)); }
+function hayAlgo(x){ return !!(x && (x.peso || x.reps || x.t || x.rpe)); }
 let CAT = {};
 function indexarCategorias(){
   CAT = {};
@@ -1366,14 +1464,38 @@ function medidaTxt(f){
 }
 
 /* ---------- selección ---------- */
+/* Formas de una comida con fechas (modo.desde / modo.hasta): una forma retirada sigue
+   existiendo para los días anteriores, y para cualquier día que ya la tenga elegida;
+   una forma nueva no aparece en los días de antes. Así cambiar un desayuno nunca
+   reescribe el histórico. Sin fechas, todas las formas valen siempre. */
+function modoVigente(iso, m){ return (!m.hasta || iso <= m.hasta) && (!m.desde || iso >= m.desde); }
+function modosDe(meal, iso){
+  const elegido = dia(iso).modos[meal.id];
+  const L = meal.modos.filter(m => modoVigente(iso, m) || m.id === elegido);
+  return L.length ? L : meal.modos;
+}
 function grupos(meal, iso){
   if(meal.modos){
-    const d = dia(iso);
-    const mid = d.modos[meal.id] || meal.modos[0].id;
-    const m = meal.modos.find(x=>x.id===mid) || meal.modos[0];
+    const d = dia(iso), MD = modosDe(meal, iso);
+    const mid = d.modos[meal.id] || MD[0].id;
+    const m = MD.find(x=>x.id===mid) || MD[0];
     return m.grupos;
   }
   return meal.grupos;
+}
+/* Al copiar un día o una comida a otra fecha: si la forma que se copia ya no existe
+   en la fecha de destino, esa comida se queda sin copiar en vez de resucitar la forma vieja. */
+function ajustarModosCopiados(iso, desde, soloMeal){
+  const d = dia(iso);
+  comidasDelDia(iso).forEach(meal=>{
+    if(!meal.modos || (soloMeal && meal.id !== soloMeal)) return;
+    if(!meal.modos.some(m=>m.desde || m.hasta)) return;
+    const o = S.log[desde] || {};
+    const mid = (o.modos && o.modos[meal.id]) || modosDe(meal, desde)[0].id;
+    const m = meal.modos.find(x=>x.id===mid);
+    if(m && modoVigente(iso, m)) d.modos[meal.id] = mid;
+    else { delete d.modos[meal.id]; delete d.sel[meal.id]; }
+  });
 }
 function selDe(iso, mealId, grpId){
   const s = dia(iso).sel[mealId];
@@ -1489,7 +1611,8 @@ function nombreComida(iso, mealId){
 function comidasRegistradas(iso){
   return comidasDelDia(iso).filter(m=> m.id!=="pre" && totalComida(iso,m).kcal>0).length;
 }
-function comidasTotales(iso){ return comidasDelDia(iso).filter(m=>m.id!=="pre").length; }
+/* una comida entera opcional (m.opcional) no cuenta para la adherencia */
+function comidasTotales(iso){ return comidasDelDia(iso).filter(m=>m.id!=="pre" && !m.opcional).length; }
 
 /* =====================================================================
    ADHERENCIA · repetir, favoritos, racha
@@ -1516,12 +1639,14 @@ function copiarDia(iso, desde){
   const o = S.log[desde], d = dia(iso);
   d.sel = JSON.parse(JSON.stringify(o.sel || {}));
   d.modos = JSON.parse(JSON.stringify(o.modos || {}));
+  ajustarModosCopiados(iso, desde);
   guardar();
 }
 function copiarComida(iso, mealId, desde){
   const o = S.log[desde], d = dia(iso);
   d.sel[mealId] = JSON.parse(JSON.stringify(o.sel[mealId] || {}));
   if(o.modos && o.modos[mealId]) d.modos[mealId] = o.modos[mealId];
+  ajustarModosCopiados(iso, desde, mealId);
   guardar();
 }
 /* --- favoritos por comida --- */
@@ -1539,9 +1664,13 @@ function guardarFav(iso, mealId, nombre){
 function aplicarFav(iso, mealId, idx){
   const f = favsDe(mealId)[idx]; if(!f) return;
   const d = dia(iso);
+  /* un favorito guardado con una forma ya retirada no se aplica */
+  const meal = comidasDelDia(iso).find(m=>m.id===mealId);
+  const fm = f.modo && meal && meal.modos && meal.modos.find(m=>m.id===f.modo);
+  if(fm && !modoVigente(iso, fm)) return false;
   d.sel[mealId] = JSON.parse(JSON.stringify(f.sel));
   if(f.modo) d.modos[mealId] = f.modo;
-  guardar();
+  guardar(); return true;
 }
 function borrarFav(mealId, idx){
   if(S.favs[mealId]) { S.favs[mealId].splice(idx,1); guardar(); }
@@ -1619,6 +1748,21 @@ function generarICS(){
 /* =====================================================================
    VISTA · NUTRICIÓN
    ===================================================================== */
+/* Semana del bloque: en Entreno, el objetivo de la semana; en Hoy, el ajuste de comida. */
+function tarjetaBloque(iso, enEntreno){
+  const w = semanaBloque(iso); if(!w) return "";
+  const B = S.plan.bloque;
+  if(w.antes) return enEntreno ? `<div class="note info"><b>El bloque empieza el ${fechaLarga(B.inicio)}.</b> Hasta entonces se ven las sesiones de la semana 1.</div>` : "";
+  if(w.despues) return `<div class="note info"><b>Bloque terminado.</b> Las ${w.tot} semanas acabaron: se ven las sesiones de la última. Hablamos del siguiente.</div>`;
+  const tipo = S.plan.tiposDia ? S.plan.tiposDia.find(t=>t.id===dia(iso).tipo) : null;
+  const txt = enEntreno ? w.s.objetivo : (w.s.nutri || "");
+  if(!enEntreno && !txt && !tipo) return "";
+  return `<div class="card"><h2>📅 Semana ${w.n} de ${w.tot} <span class="rt">${esc(w.s.nombre)}</span></h2>
+    ${txt?`<div class="tiny" style="margin-top:0">${esc(txt)}</div>`:""}
+    ${!enEntreno && tipo && tipo.nota?`<div class="tiny" style="margin-top:6px"><b>Hoy, día ${esc(tipo.nombre.toLowerCase())}.</b> ${esc(tipo.nota)}</div>`:""}
+    ${w.s.descarga?`<div class="note info" style="margin-top:8px"><b>Semana de descarga.</b> ${esc(enEntreno?(B.notaDescarga||"Menos series: se ve en cada ejercicio."):(B.notaDescargaComida||""))}</div>`:""}
+  </div>`;
+}
 function renderHoy(){
   const iso = S.ui.fecha, d = dia(iso), obj = objetivo(iso), t = totalDia(iso);
   const pct = Math.min(100, t.kcal/obj.kcal*100);
@@ -1639,6 +1783,7 @@ function renderHoy(){
       ${macroBox("Grasas", t.g, obj.g, "var(--gra)")}
     </div>
   </div>`;
+  h += tarjetaBloque(iso, false);
 
   /* gramos o raciones */
   if(hayMedidas()){
@@ -1768,7 +1913,7 @@ function renderHoy(){
       }).join("")}</div>
     </div>
     ${ant ? `<button class="btn sec" id="btnRepetirDia" style="margin-top:12px">↺ Repetir el ${fechaLarga(ant).toLowerCase()}</button>
-      <div class="tiny" style="margin-top:6px">Copia todas las comidas de tu último día de ${dia(iso).tipo}. Luego puedes retocar lo que cambie.</div>`
+      <div class="tiny" style="margin-top:6px">Copia todas las comidas de tu último día de ${nombreTipo(dia(iso).tipo)}. Luego puedes retocar lo que cambie.</div>`
       : `<div class="tiny" style="margin-top:10px">Cuando tengas días registrados, aquí podrás repetirlos de un toque.</div>`}
   </div>`;
 
@@ -1794,22 +1939,23 @@ function renderHoy(){
     }
 
     if(meal.modos){
-      const mid = d.modos[meal.id] || meal.modos[0].id;
-      const fams = S.plan.marcarEleccion ? [...new Set(meal.modos.map(m=>m.fam).filter(Boolean))] : [];
+      const MD = modosDe(meal, iso);
+      const mid = d.modos[meal.id] || MD[0].id;
+      const fams = S.plan.marcarEleccion ? [...new Set(MD.map(m=>m.fam).filter(Boolean))] : [];
       if(fams.length > 1){
-        const act = (meal.modos.find(m=>m.id===mid) || meal.modos[0]).fam;
+        const act = (MD.find(m=>m.id===mid) || MD[0]).fam;
         h += `<div class="elegir">Elige <b>UNA</b> de las ${fams.length===2?"dos":fams.length} formas:</div>`;
         h += `<div class="modes fam">` + fams.map(f=>{
-          const primero = meal.modos.find(m=>m.fam===f).id;
+          const primero = MD.find(m=>m.fam===f).id;
           return `<button data-modo="${meal.id}|${primero}" class="${f===act?"on":""}">${esc(f)}</button>`;
         }).join("") + `</div>`;
-        const hermanos = meal.modos.filter(m=>m.fam===act);
+        const hermanos = MD.filter(m=>m.fam===act);
         if(hermanos.length > 1){
           h += `<div class="modes var">` + hermanos.map(m=>
             `<button data-modo="${meal.id}|${m.id}" class="${m.id===mid?"on":""}">${esc(m.nombre)}</button>`).join("") + `</div>`;
         }
       } else {
-        h += `<div class="modes">` + meal.modos.map(m=>
+        h += `<div class="modes">` + MD.map(m=>
           `<button data-modo="${meal.id}|${m.id}" class="${m.id===mid?"on":""}">${esc(m.nombre)}</button>`).join("") + `</div>`;
       }
     }
@@ -2077,11 +2223,21 @@ function sesion(iso, diaId){
   if(!d.entreno[diaId]) d.entreno[diaId] = {};
   return d.entreno[diaId];
 }
+/* Drop sets con fila propia (plan.registroDrop): se guardan en la sesión con la clave
+   "d"+índice, FUERA del array de series. Así no entran en el volumen, ni en el contador
+   de series, ni en la mejor serie de la progresión: el drop no se progresa. */
+function tieneDrop(ex){ return !!(S.plan.registroDrop && /drop/i.test(ex.reps||"")); }
+function ultimoDrop(iso, diaId, exIdx){
+  const k = "d"+exIdx;
+  const fechas = Object.keys(S.log).filter(f=> f < iso && S.log[f].entreno && S.log[f].entreno[diaId] && S.log[f].entreno[diaId][k]).sort().reverse();
+  for(const f of fechas){ const x = (S.log[f].entreno[diaId][k]||[])[0]; if(x && (x.peso||x.reps)) return x; }
+  return null;
+}
 function ultimaSesion(iso, diaId, exIdx){
   const fechas = Object.keys(S.log).filter(f=> f < iso && S.log[f].entreno && S.log[f].entreno[diaId]).sort().reverse();
   for(const f of fechas){
     const s = S.log[f].entreno[diaId][exIdx];
-    if(s && s.some(x=>x && (x.peso||x.reps))) return {fecha:f, sets:s};
+    if(s && s.some(hayAlgo)) return {fecha:f, sets:s};
   }
   return null;
 }
@@ -2090,25 +2246,34 @@ function renderEntreno(){
   /* el día guardado puede no existir en este plan (primer arranque, o un plan
      con otros ids de día): en ese caso se cae al primero en vez de romperse. */
   let did = S.ui.diaEntreno;
-  if(!S.plan.entrenos.some(x=>x.id===did)){ did = S.plan.entrenos[0].id; S.ui.diaEntreno = did; }
-  const dEnt = S.plan.entrenos.find(x=>x.id===did);
-  let h = `<div class="dsel">` + S.plan.entrenos.map(e=>
+  const LE = entrenosDe(iso);
+  /* sesiones con día fijo (e.dow): al cambiar de fecha se abre la de ese día */
+  if(S.ui._entFecha !== iso){
+    S.ui._entFecha = iso;
+    const fija = LE.find(e=>e.dow===dowNum(iso));
+    if(fija){ did = fija.id; S.ui.diaEntreno = did; }
+  }
+  if(!LE.some(x=>x.id===did)){ did = LE[0].id; S.ui.diaEntreno = did; }
+  const dEnt = LE.find(x=>x.id===did);
+  const EJ = dEnt.ejercicios.map(ex=>exDe(ex, iso));
+  let h = tarjetaBloque(iso, true) + `<div class="dsel">` + LE.map(e=>
     `<button data-dia="${e.id}" class="${e.id===did?"on":""}">${esc(e.nombre)}<span>${esc(e.dia)}</span></button>`).join("") + `</div>`;
 
   const ses = sesion(iso, did);
   let seriesHechas=0, seriesTot=0, volumen=0;
-  dEnt.ejercicios.forEach((ex,i)=>{
+  EJ.forEach((ex,i)=>{
     seriesTot += ex.series;
-    (ses[i]||[]).forEach(s=>{ if(s&&s.reps){ seriesHechas++; volumen += (parseFloat(s.peso)||0)*(parseFloat(s.reps)||0); } });
+    (ses[i]||[]).forEach(s=>{ if(serieHecha(ex,s)){ seriesHechas++; if(!ex.carrera) volumen += (parseFloat(s.peso)||0)*(parseFloat(s.reps)||0); } });
   });
 
   h += `<div class="card"><h2>${esc(dEnt.nombre)} <span class="rt">${fechaLarga(iso)}</span></h2>
     <div class="statgrid">
       <div class="stat"><b>${seriesHechas}/${seriesTot}</b><span>series completadas</span></div>
-      <div class="stat"><b>${r0(volumen).toLocaleString("es-ES")} kg</b><span>volumen total</span></div>
+      ${EJ.every(x=>x.carrera) ? `<div class="stat"><b>—</b><span>carrera: sin volumen</span></div>`
+        : `<div class="stat"><b>${r0(volumen).toLocaleString("es-ES")} kg</b><span>volumen total</span></div>`}
     </div></div>`;
 
-  dEnt.ejercicios.forEach((ex,i)=>{
+  EJ.forEach((ex,i)=>{
     const ult = ultimaSesion(iso, did, i);
     const sets = ses[i]||[];
     h += `<div class="ex">
@@ -2117,8 +2282,18 @@ function renderEntreno(){
       }<div class="exn">${esc(ex.n)}</div></div>
       <div class="exi"><b>${esc(ex.reps)}</b> · ${ex.series} ${ex.series>1?"series":"serie"}${ex.rest?` · descanso ${ex.rest>=60?(ex.rest/60).toString().replace(".5","½")+"'":ex.rest+"''"}`:" · enlazado"}</div>
       ${ex.spec?`<div class="spec">${esc(ex.spec)}</div>`:""}
-      <table class="sets"><thead><tr><th></th><th>${ex.metro?"Lastre":"Peso"} kg</th><th>${ex.metro?"Metros":"Reps"}</th><th>RIR</th></tr></thead><tbody>`;
+      <table class="sets"><thead><tr><th></th>${ex.carrera
+        ? "<th>Tiempo</th><th>FC</th><th>RPE</th>"
+        : `<th>${ex.metro?"Lastre":"Peso"} kg</th><th>${ex.metro?"Metros":"Reps"}</th><th>RIR</th>`}</tr></thead><tbody>`;
     for(let s=0;s<ex.series;s++){
+      if(ex.carrera){
+        const cur = sets[s]||{}, prev = ult ? (ult.sets[s]||{}) : {};
+        h += `<tr><td>${ex.etq||"R"}${s+1}</td>
+        <td><input type="text" inputmode="text" data-set="${did}|${i}|${s}|t" value="${esc(cur.t||"")}" placeholder="${esc(prev.t||"m:ss")}" class="${cur.t?"done":""}"></td>
+        <td><input type="number" inputmode="numeric" data-set="${did}|${i}|${s}|fc" value="${cur.fc!=null?cur.fc:""}" placeholder="${prev.fc||"–"}" class="${cur.fc?"done":""}"></td>
+        <td><input type="number" inputmode="numeric" data-set="${did}|${i}|${s}|rpe" value="${cur.rpe!=null?cur.rpe:""}" placeholder="${prev.rpe||"–"}" class="${cur.rpe?"done":""}"></td></tr>`;
+        continue;
+      }
       const cur = sets[s]||{};
       const prev = ult ? (ult.sets[s]||{}) : {};
       const phP = prev.peso!=null&&prev.peso!==""?prev.peso:(ex.pesoRef||"");
@@ -2128,8 +2303,17 @@ function renderEntreno(){
         <td><input type="number" inputmode="numeric" data-set="${did}|${i}|${s}|reps" value="${cur.reps!=null?cur.reps:""}" placeholder="${phR}" class="${cur.reps?"done":""}"></td>
         <td><input type="number" inputmode="numeric" data-set="${did}|${i}|${s}|rir" value="${cur.rir!=null?cur.rir:""}" placeholder="–" class="${cur.rir?"done":""}"></td></tr>`;
     }
+    if(tieneDrop(ex)){
+      const dk = "d"+i, cd = (ses[dk]||[])[0]||{}, pd = ultimoDrop(iso, did, i)||{};
+      h += `<tr class="droprow"><td>Drop</td>
+        <td><input type="number" inputmode="decimal" data-set="${did}|${dk}|0|peso" value="${cd.peso!=null?cd.peso:""}" placeholder="${pd.peso||""}" class="${cd.peso?"done":""}"></td>
+        <td><input type="number" inputmode="numeric" data-set="${did}|${dk}|0|reps" value="${cd.reps!=null?cd.reps:""}" placeholder="${pd.reps||""}" class="${cd.reps?"done":""}"></td>
+        <td class="dropnota">no suma</td></tr>`;
+    }
     h += `</tbody></table><div class="exfoot">
-      <div class="last">${ult ? "Última vez ("+fechaLarga(ult.fecha)+"): "+ult.sets.map(x=>x&&x.reps?`${x.peso||"–"}×${x.reps}`:"–").join("  ") : "Primera vez con este ejercicio"}</div>
+      <div class="last">${ult ? "Última vez ("+fechaLarga(ult.fecha)+"): "+ult.sets.map(x=> ex.carrera
+        ? (x&&(x.t||x.rpe) ? `${x.t||"–"}${x.rpe?" @"+x.rpe:""}` : "–")
+        : (x&&x.reps?`${x.peso||"–"}×${x.reps}`:"–")).join("  ") : "Primera vez con este ejercicio"}</div>
       ${ex.rest?`<button class="rest" data-rest="${ex.rest}">⏱ ${ex.rest>=60?(ex.rest/60).toString().replace(".5","½")+"'":ex.rest+"''"}</button>`:""}
     </div></div>`;
   });
@@ -2141,13 +2325,13 @@ function actualizarStatsEntreno(){
   if(!dEnt) return;
   const ses = sesion(S.ui.fecha, did);
   let hechas=0, tot=0, vol=0;
-  dEnt.ejercicios.forEach((ex,i)=>{
+  dEnt.ejercicios.map(ex=>exDe(ex, S.ui.fecha)).forEach((ex,i)=>{
     tot += ex.series;
-    (ses[i]||[]).forEach(s=>{ if(s&&s.reps){ hechas++; vol += (parseFloat(s.peso)||0)*(parseFloat(s.reps)||0); } });
+    (ses[i]||[]).forEach(s=>{ if(serieHecha(ex,s)){ hechas++; if(!ex.carrera) vol += (parseFloat(s.peso)||0)*(parseFloat(s.reps)||0); } });
   });
   const b = $$("#v-entreno .stat b");
   if(b[0]) b[0].textContent = hechas+"/"+tot;
-  if(b[1]) b[1].textContent = r0(vol).toLocaleString("es-ES")+" kg";
+  if(b[1] && !dEnt.ejercicios.every(x=>x.carrera)) b[1].textContent = r0(vol).toLocaleString("es-ES")+" kg";
 }
 
 /* ---------- cronómetro ---------- */
@@ -2181,7 +2365,7 @@ function renderProgreso(){
     if(!ex) return {f,kcal:0,p:0,pasos:null,tipo:tipoPorDefecto(f),ent:false,com:0,tot:0};
     const t = totalDia(f);
     return { f, kcal:t.kcal, p:t.p, pasos:ex.pasos, tipo:ex.tipo,
-             ent:Object.values(ex.entreno||{}).some(s=>Object.values(s).some(a=>a&&a.some(x=>x&&x.reps))),
+             ent:Object.values(ex.entreno||{}).some(s=>Object.values(s).some(a=>a&&a.some(x=>x&&(x.reps||x.t||x.rpe)))),
              com:comidasRegistradas(f), tot:comidasTotales(f) };
   });
   const conDatos = regs.filter(r=>r.kcal>0);
@@ -2322,7 +2506,8 @@ function renderAjustes(){
   /* si los dos tipos de día llevan lo mismo, una sola fila: dos idénticas solo confunden */
   const mismoObjetivo = !o.descanso ||
     ["kcal","p","hc","g"].every(k => o.entreno[k] === o.descanso[k]);
-  const filasObj = mismoObjetivo ? [["Todos los días","entreno"]]
+  const filasObj = S.plan.tiposDia ? S.plan.tiposDia.map(t=>[t.nombre+(t.dias?" · "+t.dias:""), t.id])
+                 : mismoObjetivo ? [["Todos los días","entreno"]]
                                  : [["Entreno","entreno"],["Descanso","descanso"]];
   let h = `<div class="card"><h2>🎯 Objetivos diarios <span class="rt">🔒 fijos</span></h2>
     <div class="fhead"><div class="fn">Día</div><span>kcal</span><span>Prot</span><span>HC</span><span>Grasa</span></div>
@@ -2469,13 +2654,15 @@ function generarResumen(){
 
   let L = [];
   L.push(`*${S.plan.cliente} · semana ${fechaLarga(lunes)} – ${fechaLarga(dias[6])}*`);
+  const wb = semanaBloque(lunes);
+  if(wb && !wb.antes && !wb.despues) L.push(`Semana ${wb.n}/${wb.tot} del bloque · ${wb.s.nombre}`);
   L.push("");
   L.push("*NUTRICIÓN*");
   L.push(`· Días registrados: ${conD.length}/${activos.length}`);
   L.push(`· Adherencia comidas: ${comTot?r0(comOK/comTot*100):0} % (${comOK}/${comTot})`);
   L.push(`· Media kcal: ${r0(mk)} (objetivo medio ${r0(conD.length?conD.reduce((a,b)=>a+b.obj.kcal,0)/conD.length:0)}) → ${desv>=0?"+":""}${r0(desv)} kcal/día`);
   L.push(`· Media proteína: ${r0(mp)} g`);
-  const dd = regs.map(r=> r.t.kcal ? `${DIAS_SEM[dowNum(r.f)].slice(0,2).toUpperCase()} ${r0(r.t.kcal)}` : null).filter(Boolean);
+  const dd = regs.map(r=> r.t.kcal ? `${DIAS_SEM[dowNum(r.f)].slice(0,2).toUpperCase()} ${r0(r.t.kcal)}${S.plan.tiposDia?" ("+nombreTipo(r.tipo)+" "+r.obj.kcal+")":""}` : null).filter(Boolean);
   if(dd.length) L.push(`· Por día: ${dd.join(" · ")}`);
   L.push("");
   L.push("*PASOS*");
@@ -2597,14 +2784,21 @@ function generarResumen(){
     activos.forEach(f=>{
       const s = S.log[f] && S.log[f].entreno && S.log[f].entreno[e.id];
       if(!s) return;
-      const lineas = e.ejercicios.map((ex,i)=>{
+      const lineas = e.ejercicios.map((ex0,i)=>{
+        const ex = exDe(ex0, f);
+        if(ex.carrera){
+          const cs = (s[i]||[]).filter(x=>x&&(x.t||x.rpe));
+          return cs.length ? `   – ${ex.n}${ex.reps?" ("+ex.reps+")":""}: ` + cs.map(x=>`${x.t||"–"}${x.fc?" · FC "+x.fc:""}${x.rpe?" · RPE "+x.rpe:""}`).join(" | ") : null;
+        }
         const sets = (s[i]||[]).filter(x=>x&&x.reps);
-        if(!sets.length) return null;
-        return `   – ${ex.n}: ` + sets.map(x=>`${x.peso||"–"}×${x.reps}${x.rir!=null&&x.rir!==""?` (RIR ${x.rir})`:""}`).join(" · ");
+        const dr = tieneDrop(ex) ? (s["d"+i]||[])[0] : null;
+        const dtxt = dr && dr.reps ? ` · drop ${dr.peso||"–"}×${dr.reps}` : "";
+        if(!sets.length && !dtxt) return null;
+        return `   – ${ex.n}: ` + sets.map(x=>`${x.peso||"–"}×${x.reps}${x.rir!=null&&x.rir!==""?` (RIR ${x.rir})`:""}`).join(" · ") + dtxt;
       }).filter(Boolean);
       if(!lineas.length) return;
       hubo=true;
-      const vol = e.ejercicios.reduce((a,ex,i)=>a+(s[i]||[]).reduce((b,x)=>b+((parseFloat(x&&x.peso)||0)*(parseFloat(x&&x.reps)||0)),0),0);
+      const vol = e.ejercicios.reduce((a,ex,i)=>a+(ex.carrera?0:(s[i]||[]).reduce((b,x)=>b+((parseFloat(x&&x.peso)||0)*(parseFloat(x&&x.reps)||0)),0)),0);
       L.push(`▸ ${e.nombre} · ${fechaLarga(f)} · volumen ${r0(vol).toLocaleString("es-ES")} kg`);
       L = L.concat(lineas);
     });
@@ -2638,6 +2832,7 @@ function render(){
   ["hoy","entreno","progreso","ajustes"].forEach(x=> $("#v-"+x).classList.toggle("hidden", x!==v));
   $$("nav button").forEach(b=> b.classList.toggle("on", b.dataset.v===v));
   $("#dateBar").classList.toggle("hidden", v==="ajustes");
+  pintarTipos();
   $("#tipoSw").classList.toggle("hidden", v!=="hoy" || !!S.plan.tipoUnico);
   const d = dia(S.ui.fecha);
   $("#hdTitle").firstChild.textContent = {hoy:"Nutrición",entreno:"Entrenamiento",progreso:"Progreso",ajustes:"Plan"}[v];
@@ -2779,7 +2974,7 @@ document.addEventListener("click", e=>{
 
   const fv = e.target.closest("[data-fav]");
   if(fv){ const [mid,i] = fv.dataset.fav.split("|");
-    aplicarFav(S.ui.fecha, mid, +i); toast("Favorito aplicado"); reRenderConservandoAbiertos(); return; }
+    toast(aplicarFav(S.ui.fecha, mid, +i) === false ? "Ese favorito es de una versión anterior de esta comida" : "Favorito aplicado"); reRenderConservandoAbiertos(); return; }
 
   const gf = e.target.closest("[data-guardarfav]");
   if(gf){
