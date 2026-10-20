@@ -517,6 +517,8 @@ const DEFAULT_PLAN = {
     avenasabor50: ["Copos de avena de sabores (suple)", "50 g", 190, 7, 29, 3.5, "1 cazo y medio"],
     avenasabor70:  ["Copos de avena de sabores (suple)", "70 g", 266, 9.8, 40.6, 4.9, "2 cazos"],
     harinaavena50:["Harina de avena de sabores (suple)", "50 g", 190, 7, 29, 3.5, "1 cazo y medio"],
+    // 20/10 · rescate de la cena para los días cortos: lechesl200 + prot30 + harinaavena50
+    batido_cena:  ["Batido extra: leche + proteína + harina de avena (suple)", "200 ml + 30 g + 50 g", 403, 38, 40, 8.5, "1 vaso + 1 cazo + 1 cazo y medio"],
     harinaavena70: ["Harina de avena de sabores (suple)", "70 g", 266, 9.8, 40.6, 4.9, "2 cazos"],
     cremaarroz50: ["Crema de arroz (suple)", "50 g", 190, 3.5, 42, 0.5, "1 cazo y medio"],
     cremaarroz70:  ["Crema de arroz (suple)", "70 g", 266, 4.9, 58.8, 0.7, "2 cazos"],
@@ -574,7 +576,7 @@ const DEFAULT_PLAN = {
     { id:"prot", nombre:"Proteínas", icon:"🥩", ids:[
       "pollo200","pollo150","ternera180","ternera150","cerdo180","cerdo150","picada150","picadamix150",
       "merluza220","salmon150","atun2","atun1","gambas200","huevos32","huevos22","tortillaqueso",
-      "pavolonchas100","pavolonchas60","jamoncocido100","jamonserrano60","jamonserrano30","legumbre250","prot30","pechugalata2",
+      "pavolonchas100","pavolonchas60","jamoncocido100","jamonserrano60","jamonserrano30","legumbre250","prot30","batido_cena","pechugalata2",
       "quesobatido250","quesobatido125","yogurprot","yogurgriego150","lechesl300","lechesl200","quesolight30",
       "havarti40","havarti20","mozza50","mozza25","barr_barebells",
       "cap_natillas","cap_quesocanela","cap_yogurcacao","cap_helado","cap_gelatina","cap_barrita",
@@ -767,9 +769,11 @@ const DEFAULT_PLAN = {
           { id:"hc",   nombre:"Hidratos", tipo:"one", ops:["patata300","patata250","patata200","boniato250","arroz50","pasta50","panint60","panint40"] },
           { id:"veg",  nombre:"Verdura", tipo:"one", ops:["calabacin200","champi150","judiaverde200","espinacas200","esparragos150","pimicebolla100","tomatetrit100","cremacalab250"] },
           { id:"gra",  nombre:"Grasa", tipo:"one", ops:["aove10","aove5"] },
-          { id:"postre", nombre:"Postre", nota:"desde el 10/10 va siempre: es la otra parte de lo que le quitamos al desayuno", tipo:"one", ops:["cap_quesocanela","yogurprot","cap_yogurcacao","cap_choco15","cap_flan"] }
+          { id:"postre", nombre:"Postre", nota:"desde el 10/10 va siempre: es la otra parte de lo que le quitamos al desayuno", tipo:"one", ops:["cap_quesocanela","yogurprot","cap_yogurcacao","cap_choco15","cap_flan"] },
+          { id:"batidox", nombre:"Batido extra opcional", nota:"solo los días que llegues a la cena por 1.200-1.300 kcal: +403 kcal y 38 g de proteína", tipo:"one", ops:["batido_cena"] }
         ],
-        notas:[["El postre ya no es opcional","Desde que el desayuno es más corto, el postre de la cena va siempre. La gelatina y la infusión ya no cuentan como postre aquí: elige uno de los cinco."],
+        notas:[["El batido extra, para los días cortos","Si al llegar a la cena la app marca que vas por 1.200-1.300 kcal, añade el batido además del postre: un vaso de leche con un cazo de proteína y un cazo y medio de harina de avena. Son 403 kcal y 38 g de proteína más. Los días que ya vas bien, no hace falta."],
+               ["El postre ya no es opcional","Desde que el desayuno es más corto, el postre de la cena va siempre. La gelatina y la infusión ya no cuentan como postre aquí: elige uno de los cinco."],
                ["Cenas muy tarde","A las 22:30 conviene que la cena sea a la plancha o al horno y no frita: se digiere antes y molesta menos para dormir. Apunta abajo la hora real a la que cenaste."]] }
     ]
   },
@@ -1246,6 +1250,7 @@ const DEFAULT_PLAN = {
   },
 
   recordatorios: [
+    "Antes de cenar, mira cuántas kcal llevas. Si vas por 1.200-1.300, toma el batido extra de la cena (leche + proteína + harina de avena): +403 kcal y 38 g de proteína. Quedarse muy corto un día tras otro también frena.",
     "Este primer mes el objetivo es uno solo: comer bien todos los días. No cuentes calorías. Elige por raciones, completa las cinco comidas y ya está.",
     "Pésate un solo día a la semana, siempre el mismo, en ayunas. Apúntalo y sigue con tu día: lo que significa lo vemos juntos con el resumen del domingo.",
     "Guisos, sí. Grasa de guiso, no: sofrito corto con una cucharada de aceite, carne sin la parte grasa ni la piel, y fuera chorizo, morcilla y tocino.",
